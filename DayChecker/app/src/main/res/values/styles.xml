@@ -7,4 +7,12 @@
         <item name="colorAccent">@color/highlight</item>
     </style>
 
+    <style name="AppTheme.NooActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/mainTheme</item>
+        <item name="colorPrimaryDark">@color/statusBar</item>
+        <item name="colorAccent">@color/highlight</item>
+    </style>
+
 </resources>

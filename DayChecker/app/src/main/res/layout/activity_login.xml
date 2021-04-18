@@ -9,12 +9,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="204dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@drawable/title_password" />
 
     <TextView
@@ -32,113 +33,111 @@
 
     <ImageButton
         android:id="@+id/btnNumpad1"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad4"
         app:layout_constraintEnd_toStartOf="@+id/btnNumpad2"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_1" />
 
     <ImageButton
         android:id="@+id/btnNumpad2"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_2" />
-    
+
     <ImageButton
         android:id="@+id/btnNumpad3"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad6"
         app:layout_constraintStart_toEndOf="@+id/btnNumpad2"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_3" />
-    
+
     <ImageButton
         android:id="@+id/btnNumpad4"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad7"
         app:layout_constraintEnd_toStartOf="@+id/btnNumpad5"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_4" />
-    
+
     <ImageButton
         android:id="@+id/btnNumpad5"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_5" />
 
     <ImageButton
         android:id="@+id/btnNumpad6"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad9"
         app:layout_constraintStart_toEndOf="@+id/btnNumpad5"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_6" />
 
     <ImageButton
         android:id="@+id/btnNumpad7"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="147dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnNumpad8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnNumpad8"
+        app:layout_constraintEnd_toStartOf="@+id/btnNumpad8"
         app:srcCompat="@drawable/numpad_7" />
-    
+
     <ImageButton
         android:id="@+id/btnNumpad8"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_8" />
 
     <ImageButton
         android:id="@+id/btnNumpad9"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnNumpad_erase"
         app:layout_constraintStart_toEndOf="@+id/btnNumpad8"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_9" />
 
     <ImageButton
         android:id="@+id/btnNumpad0"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:color/transparent"
         app:srcCompat="@drawable/numpad_0" />
-    
+
     <ImageButton
         android:id="@+id/btnNumpad_erase"
-        android:layout_width="112dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="72dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnNumpad0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnNumpad0"
+        app:layout_constraintStart_toEndOf="@+id/btnNumpad0"
         app:srcCompat="@drawable/numpad_erase" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="2dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,32 +148,32 @@
             android:id="@+id/password_bar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
             android:id="@+id/password_bar2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
             android:id="@+id/password_bar3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
             android:id="@+id/password_bar4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/password_bar" />
     </LinearLayout>
 
