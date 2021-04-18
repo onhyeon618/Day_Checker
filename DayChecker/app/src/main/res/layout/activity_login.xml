@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/basicBackground">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="204dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="112dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/title_password" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/medium"
+        android:text="비밀번호를 입력하세요."
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad1"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad4"
+        app:layout_constraintEnd_toStartOf="@+id/btnNumpad2"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_1" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad2"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_2" />
+    
+    <ImageButton
+        android:id="@+id/btnNumpad3"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad6"
+        app:layout_constraintStart_toEndOf="@+id/btnNumpad2"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_3" />
+    
+    <ImageButton
+        android:id="@+id/btnNumpad4"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad7"
+        app:layout_constraintEnd_toStartOf="@+id/btnNumpad5"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_4" />
+    
+    <ImageButton
+        android:id="@+id/btnNumpad5"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_5" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad6"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad9"
+        app:layout_constraintStart_toEndOf="@+id/btnNumpad5"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_6" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad7"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="147dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNumpad8"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_7" />
+    
+    <ImageButton
+        android:id="@+id/btnNumpad8"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_8" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad9"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpad_erase"
+        app:layout_constraintStart_toEndOf="@+id/btnNumpad8"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_9" />
+
+    <ImageButton
+        android:id="@+id/btnNumpad0"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_0" />
+    
+    <ImageButton
+        android:id="@+id/btnNumpad_erase"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnNumpad0"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/numpad_erase" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <ImageView
+            android:id="@+id/password_bar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="12dp"
+            app:srcCompat="@drawable/password_bar" />
+
+        <ImageView
+            android:id="@+id/password_bar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="12dp"
+            app:srcCompat="@drawable/password_bar" />
+
+        <ImageView
+            android:id="@+id/password_bar3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="12dp"
+            app:srcCompat="@drawable/password_bar" />
+
+        <ImageView
+            android:id="@+id/password_bar4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="12dp"
+            app:srcCompat="@drawable/password_bar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <ImageView
+            android:id="@+id/heart_icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heart_icon" />
+
+        <ImageView
+            android:id="@+id/heart_icon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heart_icon" />
+
+        <ImageView
+            android:id="@+id/heart_icon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heart_icon" />
+
+        <ImageView
+            android:id="@+id/heart_icon4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heart_icon" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
