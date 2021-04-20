@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="password_category"
+        app:title="보안"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:key="password_usage"
+            app:title="비밀번호 사용하기"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="reset_password"
+            app:title="비밀번호 변경하기"
+            app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="data_category"
+        app:title="데이터"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="import_data"
+            app:title="데이터 내려받기"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="export_data"
+            app:title="데이터 백업하기"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="reset_data"
+            app:title="초기화"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="developer_category"
+        app:title="어플리케이션"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="app_version"
+            app:title="어플리케이션 버전"
+            app:summary="v1.0.0"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="send_inquiry"
+            app:title="문의 보내기"
+            app:iconSpaceReserved="false" >
+
+            <intent
+                android:targetPackage="com.toyprojects.daychecker"
+                android:targetClass="com.toyprojects.daychecker.InquiryActivity"/>
+        </Preference>
+
+        <Preference
+            app:key="support_developer"
+            app:title="개발자 지원하기"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

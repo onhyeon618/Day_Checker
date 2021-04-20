@@ -33,6 +33,10 @@
             android:theme="@style/Theme.NoActionBar" >
         </activity>
 
+        <activity android:name=".InquiryActivity"
+            android:theme="@style/Theme.NoActionBar" >
+        </activity>
+
     </application>
 
 </manifest>
