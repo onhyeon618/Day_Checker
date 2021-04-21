@@ -1,10 +1,8 @@
 package com.toyprojects.daychecker
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.toyprojects.daychecker.databinding.ActivityInquiryBinding
-import com.toyprojects.daychecker.databinding.ActivitySettingsBinding
 
 class InquiryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,4 +10,6 @@
     <color name="statusBar">#c3aeff</color>
     <color name="basicBackground">#fbf9ff</color>
     <color name="highlight">#fdaee5</color>
+
+    <color name="black">#000000</color>
 </resources>

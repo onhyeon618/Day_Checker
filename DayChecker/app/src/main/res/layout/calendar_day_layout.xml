@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="2dp">
+
+    <TextView
+        android:id="@+id/dayText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:fontFamily="@font/light"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="22" />
+
+    <LinearLayout
+        android:id="@+id/dotsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom|center_horizontal" >
+
+        <View
+            android:id="@+id/dotView1"
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:visibility="invisible"
+            android:background="@drawable/day_dot_view" />
+
+        <View
+            android:id="@+id/dotView2"
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:visibility="gone"
+            android:background="@drawable/day_dot_view" />
+
+        <View
+            android:id="@+id/dotView3"
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:visibility="gone"
+            android:background="@drawable/day_dot_view" />
+
+    </LinearLayout>
+</FrameLayout>
