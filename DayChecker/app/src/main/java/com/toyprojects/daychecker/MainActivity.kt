@@ -51,6 +51,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Add record buttons
+        binding.btnNewRecord.setOnClickListener {
+            val intent = Intent(this, EditorActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnAddRecord.setOnClickListener {
+            val intent = Intent(this, EditorActivity::class.java)
+            startActivity(intent)
+        }
+
         // set up calendar
         val currentMonth = YearMonth.now()
         val firstMonth = currentMonth.minusMonths(10)
@@ -176,5 +186,7 @@ class MainActivity : AppCompatActivity() {
                 binding.calendarView.notifyDateChanged(oldDate)
             }
         }
+
+        // 선택한 날짜의 기록 여부에 따라...
     }
 }

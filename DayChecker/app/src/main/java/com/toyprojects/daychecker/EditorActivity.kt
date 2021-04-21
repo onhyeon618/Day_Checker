@@ -16,8 +16,8 @@ class EditorActivity : AppCompatActivity() {
         topAppBar.setTitle(R.string.records)
 
         topAppBar.setNavigationOnClickListener {
-            Toast.makeText(this, "Back pressed", Toast.LENGTH_SHORT).show()
-            // finish()
+            // 작성 내용 있는지 먼저 확인, 있으면 Alert 띄우도록 수정 필요
+            finish()
         }
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
