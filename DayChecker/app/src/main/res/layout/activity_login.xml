@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/basicBackground">
@@ -19,7 +18,7 @@
         app:srcCompat="@drawable/title_password" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textPwdInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -111,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/btnNumpad_erase"
+        app:layout_constraintBottom_toTopOf="@+id/btnNumpadErase"
         app:layout_constraintStart_toEndOf="@+id/btnNumpad8"
         app:srcCompat="@drawable/numpad_9" />
 
@@ -127,7 +126,7 @@
         app:srcCompat="@drawable/numpad_0" />
 
     <ImageButton
-        android:id="@+id/btnNumpad_erase"
+        android:id="@+id/btnNumpadErase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -143,10 +142,10 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textPwdInfo">
 
         <ImageView
-            android:id="@+id/password_bar1"
+            android:id="@+id/passwordBar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
@@ -154,7 +153,7 @@
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
-            android:id="@+id/password_bar2"
+            android:id="@+id/passwordBar2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
@@ -162,7 +161,7 @@
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
-            android:id="@+id/password_bar3"
+            android:id="@+id/passwordBar3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
@@ -170,7 +169,7 @@
             app:srcCompat="@drawable/password_bar" />
 
         <ImageView
-            android:id="@+id/password_bar4"
+            android:id="@+id/passwordBar4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
@@ -187,42 +186,42 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textPwdInfo">
 
         <ImageView
-            android:id="@+id/heart_icon1"
+            android:id="@+id/heartIcon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:srcCompat="@drawable/heart_icon" />
 
         <ImageView
-            android:id="@+id/heart_icon2"
+            android:id="@+id/heartIcon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:srcCompat="@drawable/heart_icon" />
 
         <ImageView
-            android:id="@+id/heart_icon3"
+            android:id="@+id/heartIcon3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:srcCompat="@drawable/heart_icon" />
 
         <ImageView
-            android:id="@+id/heart_icon4"
+            android:id="@+id/heartIcon4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:srcCompat="@drawable/heart_icon" />
     </LinearLayout>
 
