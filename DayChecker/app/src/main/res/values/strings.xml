@@ -6,6 +6,12 @@
     <string name="save_record">저장</string>
     <string name="inquiries">문의하기</string>
 
+    <string name="pwd_insert_current">비밀번호를 입력하세요.</string>
+    <string name="pwd_new_input">사용할 비밀번호를 입력하세요.</string>
+    <string name="pwd_input_again">다시 한 번 입력하세요.</string>
+    <string name="pwd_change">새 비밀번호를 입력하세요.</string>
+    <string name="pwd_wrong_input">잘못된 입력입니다. 다시 시도하세요.</string>
+
     <string name="no_record1">아직 기록이 없어요!</string>
     <string name="no_record2">새 기록을 만드시겠어요?</string>
     

@@ -7,14 +7,30 @@ import com.toyprojects.daychecker.databinding.ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private var calledState = 0
 
+    // handle input
     private var inputPwd = StringBuilder()
     private var inputLength = 0
+
+    // will be used when setting new password (has to be compared)
+    private var instantPwd = ""
+    // will be used when changing password (if true, current pwd need to be input first)
+    private var changePwd = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Change the text on screen depend on the state
+        calledState = intent.getIntExtra(AppLockState.varName, 0)
+        when(calledState) {
+            AppLockState.ENABLE_PWD -> binding.textPwdInfo.text = getString(R.string.pwd_new_input)
+            AppLockState.REMOVE_PWD -> binding.textPwdInfo.text = getString(R.string.pwd_insert_current)
+            AppLockState.CHANGE_PWD -> binding.textPwdInfo.text = getString(R.string.pwd_insert_current)
+            AppLockState.START_APP -> binding.textPwdInfo.text = getString(R.string.pwd_insert_current)
+        }
 
         // ArrayList to set onClickListeners easily
         val buttonArray = arrayListOf(binding.btnNumpad1, binding.btnNumpad2, binding.btnNumpad3, binding.btnNumpad4,
@@ -48,17 +64,15 @@ class LoginActivity : AppCompatActivity() {
 
         // if input is a number
         if (enterin != -1) {
-            if (inputLength < 4) {   // 아직 입력 완료했을 때의 코드가 없어서 필요한 조건; 이후 삭제 예정
-                inputPwd.append(enterin.toString())
-                inputLength += 1
-                barArray.get(inputLength - 1).visibility = View.INVISIBLE   // hide bar-image
-                heartArray.get(inputLength - 1).visibility = View.VISIBLE   // show heart-image
+            inputPwd.append(enterin.toString())
+            inputLength += 1
+            barArray.get(inputLength - 1).visibility = View.INVISIBLE   // hide bar-image
+            heartArray.get(inputLength - 1).visibility = View.VISIBLE   // show heart-image
+
+            // when input length reached four
+            if (inputLength == 4) {
+                handleInputByState(calledState)
             }
-//            // when input length reached four
-//            if (inputLength == 4) {
-//                // 1. 입력값이 비밀번호와 동일하면 창을 종료하고 메인화면 진입
-//                // 2. 입력값이 비밀번호와 다른 경우 입력을 리셋, 틀렸음을 알려주고 다시 입력 대기
-//            }
         }
         // if input is "erase"
         else {
@@ -69,5 +83,115 @@ class LoginActivity : AppCompatActivity() {
                 heartArray.get(inputLength).visibility = View.INVISIBLE
             }
         }
+    }
+
+    private fun handleInputByState(state: Int) {
+        // 일단 마지막 하트까지는 다 보여준 뒤에 다음 내용을 진행하고 싶은데...
+        // finish() 할 때는 되는데 clearInput() 할 때만 마지막 하트가 안 보인다. 확인 필요.
+
+        when(state) {
+            // 1. Enable password(set new one): Request input again, compare, if same allow pwd usage
+            AppLockState.ENABLE_PWD -> {
+                // if it was the first input
+                if (instantPwd.isEmpty()) {
+                    // save current input instantly
+                    instantPwd = inputPwd.toString()
+                    // reset input
+                    clearInput()
+
+                    binding.textPwdInfo.text = getString(R.string.pwd_input_again)
+                }
+                else {
+                    // if re-input is same as the before
+                    if (instantPwd == inputPwd.toString()) {
+                        App.prefs.setBoolean("pwd_usage", true)
+                        App.prefs.setString("current_pwd", instantPwd)
+                        setResult(RESULT_OK)
+                        finish()
+                    }
+                    else {
+                        instantPwd = ""
+                        clearInput()
+                        binding.textPwdInfo.text = getString(R.string.pwd_wrong_input)
+                    }
+                }
+            }
+
+            // 2. Disable password(delete): Request for input, if correct disable and delete pwd
+            AppLockState.REMOVE_PWD -> {
+                // if input is correct password
+                if (inputPwd.toString() == App.prefs.getString("current_pwd", "")) {
+                    App.prefs.setBoolean("pwd_usage", false)
+                    App.prefs.setString("current_pwd", "")
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                else {
+                    clearInput()
+                    binding.textPwdInfo.text = getString(R.string.pwd_wrong_input)
+                }
+            }
+
+            // 3. Change password: Request for current pwd, if correct continue as #1 steps
+            AppLockState.CHANGE_PWD -> {
+                // current pwd need to be input first
+                if (changePwd) {
+                    if (inputPwd.toString() == App.prefs.getString("current_pwd", "")) {
+                        changePwd = false
+                        clearInput()
+                        binding.textPwdInfo.text = getString(R.string.pwd_new_input)
+                    }
+                    else {
+                        clearInput()
+                        binding.textPwdInfo.text = getString(R.string.pwd_wrong_input)
+                    }
+                }
+                // now change password
+                else {
+                    if (instantPwd.isEmpty()) {
+                        instantPwd = inputPwd.toString()
+                        clearInput()
+                        binding.textPwdInfo.text = getString(R.string.pwd_input_again)
+                    }
+                    else {
+                        if (instantPwd == inputPwd.toString()) {
+                            App.prefs.setBoolean("pwd_usage", true)
+                            App.prefs.setString("current_pwd", instantPwd)
+                            setResult(RESULT_OK)
+                            finish()
+                        }
+                        else {
+                            instantPwd = ""
+                            clearInput()
+                            binding.textPwdInfo.text = getString(R.string.pwd_wrong_input)
+                        }
+                    }
+                }
+            }
+
+            // 4. Screen loaded when opening the app -> ?
+            AppLockState.START_APP -> {
+                // if input is correct
+                if (inputPwd.toString() == App.prefs.getString("current_pwd", "")) {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                else {
+                    clearInput()
+                    binding.textPwdInfo.text = getString(R.string.pwd_wrong_input)
+                }
+            }
+        }
+    }
+
+    private fun clearInput() {
+        val barArray = arrayListOf(binding.passwordBar1, binding.passwordBar2, binding.passwordBar3, binding.passwordBar4)
+        val heartArray = arrayListOf(binding.heartIcon1, binding.heartIcon2, binding.heartIcon3, binding.heartIcon4)
+
+        for (bar in barArray) { bar.visibility = View.VISIBLE }
+        for (heart in heartArray) { heart.visibility = View.INVISIBLE }
+
+        inputPwd.clear()
+        inputLength = 0
     }
 }

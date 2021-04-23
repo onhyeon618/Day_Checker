@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    // variable for handling app lock state
+    private var lock = true
+
     // global variables for setting up CalendarView
     private var selectedDate: LocalDate? = null
     private val today = LocalDate.now()
@@ -188,5 +191,35 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 선택한 날짜의 기록 여부에 따라...
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // if password is enabled
+        if(lock && App.prefs.getBoolean("pwd_usage", false)){
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra(AppLockState.varName, AppLockState.START_APP)
+            startActivityForResult(intent, AppLockState.START_APP)
+        }
+    }
+
+//    // 다른 액티비티에서 메인으로 넘어올 때마다 강제로 호출당한다. 이게 아닌가보다...
+//    override fun onPause() {
+//        super.onPause()
+//        if (App.prefs.getBoolean("pwd_usage", false)) {
+//            lock = true   // set app locked on pause
+//        }
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK) {
+            when(requestCode) {
+                AppLockState.START_APP -> {
+                    lock = false
+                }
+            }
+        }
     }
 }
