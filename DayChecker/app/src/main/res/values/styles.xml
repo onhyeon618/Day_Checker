@@ -1,13 +1,13 @@
 <resources>
     <style name="Theme.MainActionBar" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimary">#9570fa</item>
         <item name="colorPrimaryDark">@color/statusBar</item>
         <item name="colorAccent">@color/highlight</item>
         <item name="android:fontFamily">@font/medium</item>
     </style>
 
     <style name="Theme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimary">#9570fa</item>
         <item name="colorPrimaryDark">@color/statusBar</item>
         <item name="colorAccent">@color/highlight</item>
     </style>

@@ -18,4 +18,10 @@
     <string name="first_record">기록 남기기</string>
     <string name="add_record">기록 추가하기</string>
 
+    <string name="inquiry_spinner">- 선택하세요 -</string>
+    <string name="inquiry_email">회신 받으실 이메일</string>
+    <string name="inquiry_context">문의 내용</string>
+    <string name="inquiry_agreement">회신을 위한 이메일 정보 수집에 동의합니다.</string>
+    <string name="inquiry_send">문의 보내기</string>
+
 </resources>
