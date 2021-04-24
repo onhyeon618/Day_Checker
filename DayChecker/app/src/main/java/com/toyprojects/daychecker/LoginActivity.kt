@@ -1,4 +1,6 @@
 package com.toyprojects.daychecker
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -193,5 +195,20 @@ class LoginActivity : AppCompatActivity() {
 
         inputPwd.clear()
         inputLength = 0
+    }
+
+    companion object {
+        fun start(context: Context) {
+            val intent = Intent(context, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                putExtra(AppLockState.varName, AppLockState.START_APP)
+            }
+            context.startActivity(intent)
+        }
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 }

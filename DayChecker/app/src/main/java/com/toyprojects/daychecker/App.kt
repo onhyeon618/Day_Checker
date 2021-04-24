@@ -1,5 +1,6 @@
 package com.toyprojects.daychecker
 import android.app.Application
+import androidx.lifecycle.ProcessLifecycleOwner
 
 class App: Application() {
     companion object {
@@ -9,5 +10,6 @@ class App: Application() {
     override fun onCreate() {
         prefs = SaveSharedPreferences(applicationContext)
         super.onCreate()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifecycleObserver(applicationContext))
     }
 }
