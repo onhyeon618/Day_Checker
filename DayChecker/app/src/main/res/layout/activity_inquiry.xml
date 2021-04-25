@@ -146,7 +146,6 @@
                     android:fontFamily="@font/medium"
                     android:gravity="top"
                     android:inputType="textMultiLine"
-                    android:lineSpacingMultiplier="1.5"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

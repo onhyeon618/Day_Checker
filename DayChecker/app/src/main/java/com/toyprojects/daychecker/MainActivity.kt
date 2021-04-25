@@ -4,8 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -27,6 +30,7 @@ import java.time.format.DateTimeFormatter
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var doubleBackPressed: Boolean = false
 
     // variable for handling app lock state
     private var lock = true
@@ -191,5 +195,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 선택한 날짜의 기록 여부에 따라...
+    }
+
+    // BackPress twice to close the app
+    override fun onBackPressed() {
+        if (doubleBackPressed) {
+            super.onBackPressed()
+            return
+        }
+        this.doubleBackPressed = true
+        Toast.makeText(this, "\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        Handler(Looper.getMainLooper()).postDelayed({ doubleBackPressed = false }, 2000)
     }
 }
