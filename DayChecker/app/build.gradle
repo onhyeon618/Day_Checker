@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
 
@@ -59,4 +60,10 @@ dependencies {
 
     // Lifecycle components
     implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage'
+
 }

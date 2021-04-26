@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spnInquiryLayout" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtInquiryEmail"
+                android:id="@+id/inputLayoutInquiryEmail"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -96,13 +96,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2" >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInquiryEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/medium"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:inputType="textEmailAddress"
-                    android:nextFocusForward="@id/txtInquiryContext"/>
+                    android:nextFocusForward="@id/inputLayoutInquiryContext"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,10 +123,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInquiryEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutInquiryEmail" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtInquiryContext"
+                android:id="@+id/inputLayoutInquiryContext"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -141,6 +142,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInquiryContext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/medium"
