@@ -6,13 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
+        android:background="@color/white"
+        android:elevation="1dp"
         android:fitsSystemWindows="true"
         android:theme="@style/Theme.MainActionBar"
-        android:background="@color/white"
-        android:elevation="1dp">
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,5 +22,43 @@
             app:menu="@menu/editor_appbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.toyprojects.daychecker.DateTimeView
+        android:id="@+id/dtvDatePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:innerMargin="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/dtvTimePicker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4"
+        app:textSize="16sp"
+        app:textColor="@color/black"
+        app:fontFamily="@font/light"
+        app:vdtImage="@drawable/date_icon"
+        app:vdtText="2021-04-27" />
+
+    <com.toyprojects.daychecker.DateTimeView
+        android:id="@+id/dtvTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:innerMargin="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dtvDatePicker"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4"
+        app:textSize="16sp"
+        app:textColor="@color/black"
+        app:fontFamily="@font/light"
+        app:vdtImage="@drawable/time_icon"
+        app:vdtText="10:30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

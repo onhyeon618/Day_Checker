@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DateTimeView">
+        <attr name="bg" format="reference|integer" />
+        <attr name="vdtImage" format="reference|integer" />
+        <attr name="vdtText" format="reference|string" />
+        <attr name="textColor" format="reference|integer" />
+        <attr name="textSize" format="dimension" />
+        <attr name="fontFamily"/>
+        <attr name="innerMargin" format="dimension" />
+    </declare-styleable>
+</resources>
