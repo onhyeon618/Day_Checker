@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.room.Room
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -19,9 +20,11 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
+import com.toyprojects.daychecker.database.RecordDB
 import com.toyprojects.daychecker.databinding.ActivityMainBinding
 import com.toyprojects.daychecker.databinding.CalendarDayLayoutBinding
 import com.toyprojects.daychecker.databinding.CalendarMonthHeaderLayoutBinding
+import kotlinx.coroutines.runBlocking
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -39,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private var selectedDate: LocalDate? = null
     private val today = LocalDate.now()
     private val titleFormatter = DateTimeFormatter.ofPattern("yyyy년 MMM")
+
+    private var numOfRecords = mutableMapOf<LocalDate, Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +71,23 @@ class MainActivity : AppCompatActivity() {
         binding.btnAddRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
             startActivity(intent)
+        }
+
+        // Local (Room) Database
+        val roomdb = Room.databaseBuilder(
+                applicationContext,
+                RecordDB::class.java, "dayCheckRecord"
+            ).build()
+
+        runBlocking {
+            // Read entire database to get <date - num of records> pair
+            // 그 달 것만 먼저 가져오도록 하는 편이 효율적이려나... 고민 필요.
+            val itemCounts = roomdb.recordDao().countRecordPerDay()
+
+            // set each pair as map for later use
+            for (each in itemCounts) {
+                numOfRecords[each.record_date] = each.num_of_records
+            }
         }
 
         // set up calendar
@@ -105,9 +127,32 @@ class MainActivity : AppCompatActivity() {
                 val textView = container.dayBinding.dayText
                 val dotsLayout = container.dayBinding.dotsLayout
 
+                val dotView1 = container.dayBinding.dotView1
+                val dotView2 = container.dayBinding.dotView2
+                val dotView3 = container.dayBinding.dotView3
+
                 textView.text = day.date.dayOfMonth.toString()
-                // 해당 날짜의 기록 존재 여부/개수에 따라 하단 도트 표시 필요
-                // dotsLayout.isVisible = events[day.date].orEmpty().isNotEmpty()
+                
+                // Check if record exists for the day; set dotViews visibility accordingly
+                if (numOfRecords.containsKey(day.date)) {
+                    when (numOfRecords[day.date]) {
+                        1 -> dotView1.isVisible = true
+                        2 -> {
+                            dotView1.isVisible = true
+                            dotView2.isVisible = true
+                        }
+                        else -> {
+                            dotView1.isVisible = true
+                            dotView2.isVisible = true
+                            dotView3.isVisible = true
+                        }
+                    }
+                }
+                else {
+                    dotView1.visibility = View.GONE
+                    dotView2.visibility = View.GONE
+                    dotView3.visibility = View.GONE
+                }
 
                 if (day.owner == DayOwner.THIS_MONTH) {
                     textView.alpha = 1f
