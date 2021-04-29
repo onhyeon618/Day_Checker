@@ -24,6 +24,10 @@
     <string name="record_score">평가</string>
     <string name="record_memo">한 줄 메모</string>
 
+    <string name="record_state_first">단단한 거</string>
+    <string name="record_state_second">적당한 거</string>
+    <string name="record_state_third">묽은 거</string>
+
     <string name="inquiry_spinner">- 선택하세요 -</string>
     <string name="inquiry_email">회신 받으실 이메일</string>
     <string name="inquiry_context">문의 내용</string>
