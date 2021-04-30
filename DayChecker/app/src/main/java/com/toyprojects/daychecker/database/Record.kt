@@ -13,9 +13,9 @@ private const val TABLE_NAME = "dayCheckRecord"
     indices = arrayOf(Index(value = ["record_date"]))
 )
 data class Record(
-    @PrimaryKey(autoGenerate = true) val id : Int,
+    @PrimaryKey(autoGenerate = true) var id : Int,
     @ColumnInfo(name = "record_date") val record_date : LocalDate,   // will be converted to string
-    @ColumnInfo(name = "record_time") val record_time : Long,
+    @ColumnInfo(name = "record_time") val record_time : String,
     @ColumnInfo(name = "condition") val condition : Int,
     @ColumnInfo(name = "state") val state : Int,
     @ColumnInfo(name = "rating") val rating : Float,

@@ -66,11 +66,15 @@ class MainActivity : AppCompatActivity() {
         // Add record buttons
         binding.btnNewRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
-            startActivity(intent)
+            intent.putExtra(AppLockState.varName, EditorState.NEW_RECORD)
+            intent.putExtra("selectedDate", selectedDate.toString())
+            startActivityForResult(intent, EditorState.NEW_RECORD)
         }
         binding.btnAddRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
-            startActivity(intent)
+            intent.putExtra(AppLockState.varName, EditorState.NEW_RECORD)
+            intent.putExtra("selectedDate", selectedDate.toString())
+            startActivityForResult(intent, EditorState.NEW_RECORD)
         }
 
         // Local (Room) Database
@@ -240,6 +244,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 선택한 날짜의 기록 여부에 따라...
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK) {
+            when(requestCode) {
+                EditorState.NEW_RECORD -> {
+                    val updated = data?.getStringExtra("updatedDate")
+                    val updatedDate = LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)
+
+                    // change array value to show dots accordingly
+                    if (numOfRecords.containsKey(updatedDate)) {
+                        numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] =
+                            numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)]!!.plus(1)
+                    }
+                    else {
+                        numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] = 1
+                    }
+
+                    binding.calendarView.notifyDateChanged(updatedDate)
+                }
+            }
+        }
     }
 
     // BackPress twice to close the app

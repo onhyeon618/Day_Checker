@@ -1,9 +1,6 @@
 package com.toyprojects.daychecker.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import java.time.LocalDate
 
 @Dao
@@ -20,6 +17,9 @@ interface RecordDao {
 
     @Insert
     suspend fun insert(records: Record)
+
+    @Update
+    suspend fun update(records: Record)
 
     @Delete
     suspend fun delete(records: Record)

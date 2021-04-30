@@ -28,7 +28,8 @@
 
         <activity
             android:name=".EditorActivity"
-            android:theme="@style/Theme.NoActionBar" >
+            android:theme="@style/Theme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity android:name=".SettingsActivity"
