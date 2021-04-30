@@ -209,6 +209,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        moveTaskToBack(true)
+        calledState = intent.getIntExtra(AppLockState.varName, 0)
+        if (calledState == AppLockState.START_APP) {
+            moveTaskToBack(true)
+        }
+        else {
+            finish()
+        }
     }
 }

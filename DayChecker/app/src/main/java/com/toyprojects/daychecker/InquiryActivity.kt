@@ -95,62 +95,61 @@ class InquiryActivity : AppCompatActivity() {
 
     private val btnSendListener = View.OnClickListener {
         // prevent multiple click
-        clickable = false
+        if (clickable) {
+            clickable = false
 
-        binding.spnInquiryType.clearFocus()
-        binding.inputLayoutInquiryEmail.clearFocus()
-        binding.inputLayoutInquiryContext.clearFocus()
+            binding.spnInquiryType.clearFocus()
+            binding.inputLayoutInquiryEmail.clearFocus()
+            binding.inputLayoutInquiryContext.clearFocus()
 
-        // check internet connection first
-        if (!isInternetConnected(this)) {
-            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        // check each input
-        else if (!isTypeSelected) {
-            binding.spnInquiryType.requestFocus()
-            Toast.makeText(this, "문의 유형을 선택하세요.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        else if (userEmail.isEmpty()) {
-            binding.inputLayoutInquiryEmail.requestFocus()
-            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        else if (!isEmailValid) {
-            binding.inputLayoutInquiryEmail.requestFocus()
-            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        else if (inquiryContext.isEmpty()) {
-            binding.inputLayoutInquiryContext.requestFocus()
-            Toast.makeText(this, "문의 내용을 작성하세요.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        // check is checkbox chekced
-        else if (!binding.checkAgreement.isChecked) {
-            binding.checkAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
-            Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
-            clickable = true
-        }
-        // if all valid, send data to Firebase
-        else {
-            val finalInquiry = hashMapOf(
-                "inquiryType" to inquiryType,
-                "userEmail" to userEmail,
-                "inquiryContext" to inquiryContext.replace("\n", "\\\\n"),
-                "timestamp" to FieldValue.serverTimestamp()
-            )
+            // check internet connection first
+            if (!isInternetConnected(this)) {
+                Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            }
+            // check each input
+            else if (!isTypeSelected) {
+                binding.spnInquiryType.requestFocus()
+                Toast.makeText(this, "문의 유형을 선택하세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (userEmail.isEmpty()) {
+                binding.inputLayoutInquiryEmail.requestFocus()
+                Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (!isEmailValid) {
+                binding.inputLayoutInquiryEmail.requestFocus()
+                Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (inquiryContext.isEmpty()) {
+                binding.inputLayoutInquiryContext.requestFocus()
+                Toast.makeText(this, "문의 내용을 작성하세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            }
+            // check is checkbox chekced
+            else if (!binding.checkAgreement.isChecked) {
+                binding.checkAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
+                Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            }
+            // if all valid, send data to Firebase
+            else {
+                val finalInquiry = hashMapOf(
+                        "inquiryType" to inquiryType,
+                        "userEmail" to userEmail,
+                        "inquiryContext" to inquiryContext.replace("\n", "\\\\n"),
+                        "timestamp" to FieldValue.serverTimestamp()
+                )
 
-            db.collection("UserInquiry")
-                .add(finalInquiry)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "문의가 접수되었습니다. 감사합니다.", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "문의 접수에 실패했습니다. 인터넷 연결을 확인하시고 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                }
+                db.collection("UserInquiry")
+                        .add(finalInquiry)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "문의가 접수되었습니다. 감사합니다.", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "문의 접수에 실패했습니다. 인터넷 연결을 확인하시고 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+            }
         }
     }
 
