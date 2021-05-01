@@ -34,4 +34,7 @@
     <string name="inquiry_agreement">회신을 위한 이메일 정보 수집에 동의합니다.</string>
     <string name="inquiry_send">문의 보내기</string>
 
+    <string name="edit_record">수정</string>
+    <string name="delete_record">삭제</string>
+
 </resources>

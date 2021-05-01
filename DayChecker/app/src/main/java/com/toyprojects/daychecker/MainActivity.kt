@@ -1,19 +1,26 @@
 package com.toyprojects.daychecker
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -33,6 +40,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var roomdb: RecordDB
@@ -46,7 +54,32 @@ class MainActivity : AppCompatActivity() {
 
     private var numOfRecords = mutableMapOf<LocalDate, Int>()
 
-    private val rvAdapter = DayRecordAdapter()
+    private val rvAdapter = DayRecordAdapter(object : DayRecordAdapter.ItemMenuClickListener {
+        override fun onItemMenuClicked(position: Int) {
+            val popupMenu = PopupMenu(
+                applicationContext,
+                binding.recordsRV[position].findViewById(R.id.btnActions)
+            )
+            popupMenu.inflate(R.menu.recycler_menu)
+
+            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+                override fun onMenuItemClick(item: MenuItem?): Boolean {
+                    when (item?.itemId) {
+                        R.id.edit_record -> {
+                            Toast.makeText(applicationContext, "수정 클릭됨: $position", Toast.LENGTH_SHORT).show()
+                            return true
+                        }
+                        R.id.delete_record -> {
+                            deleteConfirmMsg(position)
+                            return true
+                        }
+                    }
+                    return false
+                }
+            })
+            popupMenu.show()
+        }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Toolbar
-        var topAppBar = binding.toolbar
+        val topAppBar = binding.toolbar
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.settings -> {
@@ -277,6 +310,26 @@ class MainActivity : AppCompatActivity() {
                 binding.layoutNoRecord.isVisible = true
             }
         }
+    }
+
+    private fun deleteConfirmMsg(position: Int) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("기록을 삭제하시겠습니까? 삭제한 기록은 되돌릴 수 없습니다.")
+            .setPositiveButton("삭제") { _, _ ->
+                val tempItem = rvAdapter.listData[position]
+
+                runBlocking {
+                    roomdb.recordDao().delete(tempItem)
+                }
+
+                rvAdapter.listData.removeAt(position)
+                rvAdapter.notifyDataSetChanged()
+            }
+            .setNegativeButton("취소", null)
+            .setCancelable(true)
+
+        builder.create().show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

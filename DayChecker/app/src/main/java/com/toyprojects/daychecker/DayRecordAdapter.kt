@@ -3,14 +3,18 @@ package com.toyprojects.daychecker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.toyprojects.daychecker.database.Record
 import com.toyprojects.daychecker.databinding.RecyclerDayRecordBinding
 
-class DayRecordAdapter: RecyclerView.Adapter<Holder>() {
+class DayRecordAdapter(private var itemMenuClickListener: ItemMenuClickListener): RecyclerView.Adapter<Holder>() {
     var listData = mutableListOf<Record>()
+
+    // will be used in main activity for proper actions
+    interface ItemMenuClickListener {
+        fun onItemMenuClicked(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = RecyclerDayRecordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,20 +23,18 @@ class DayRecordAdapter: RecyclerView.Adapter<Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val record = listData[position]
-        holder.setRecord(record)
+        with(holder) {
+            setRecord(record)
+            binding.btnActions.setOnClickListener {
+                itemMenuClickListener.onItemMenuClicked(position)
+            }
+        }
     }
 
     override fun getItemCount(): Int = listData.size
 }
 
 class Holder(val binding: RecyclerDayRecordBinding): RecyclerView.ViewHolder(binding.root) {
-    init {
-        // option button
-        binding.btnActions.setOnClickListener {
-            Toast.makeText(binding.root.context, "옵션 클릭됨", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     fun setRecord(record: Record) {
         binding.textRecordTime.text = record.record_time
 
