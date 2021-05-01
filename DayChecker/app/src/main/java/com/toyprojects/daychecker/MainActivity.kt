@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent, 3001)
                     true
                 }
                 else -> false
@@ -265,6 +265,13 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     binding.calendarView.notifyDateChanged(updatedDate)
+                }
+                3001 -> {
+                    val changed = data?.getIntExtra("dataReset", 0)
+                    if (changed == 3002) {
+                        numOfRecords.clear()
+                        binding.calendarView.notifyCalendarChanged()
+                    }
                 }
             }
         }
