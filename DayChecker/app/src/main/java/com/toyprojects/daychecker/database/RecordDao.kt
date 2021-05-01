@@ -12,8 +12,8 @@ interface RecordDao {
     suspend fun countRecordPerDay(): List<CountPerDay>
 
     // Get Records written in selected date
-    @Query("SELECT * FROM dayCheckRecord WHERE record_date = :date")
-    suspend fun getRecordByDate(date: LocalDate): List<Record>   // "suspend" for Coroutine
+    @Query("SELECT * FROM dayCheckRecord WHERE record_date = :date ORDER BY record_time DESC")
+    suspend fun getRecordByDate(date: LocalDate): MutableList<Record>   // "suspend" for Coroutine
 
     @Insert
     suspend fun insert(records: Record)

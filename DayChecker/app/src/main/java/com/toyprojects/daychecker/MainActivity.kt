@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -20,6 +22,7 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
+import com.toyprojects.daychecker.database.Record
 import com.toyprojects.daychecker.database.RecordDB
 import com.toyprojects.daychecker.databinding.ActivityMainBinding
 import com.toyprojects.daychecker.databinding.CalendarDayLayoutBinding
@@ -31,12 +34,10 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-    private var doubleBackPressed: Boolean = false
+    private lateinit var roomdb: RecordDB
 
-    // variable for handling app lock state
-    private var lock = true
+    private var doubleBackPressed: Boolean = false
 
     // global variables for setting up CalendarView
     private var selectedDate: LocalDate? = null
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private val titleFormatter = DateTimeFormatter.ofPattern("yyyy년 MMM")
 
     private var numOfRecords = mutableMapOf<LocalDate, Int>()
+
+    private val rvAdapter = DayRecordAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Local (Room) Database
-        val roomdb = Room.databaseBuilder(
+        roomdb = Room.databaseBuilder(
                 applicationContext,
                 RecordDB::class.java, "dayCheckRecord"
             ).build()
@@ -181,11 +184,8 @@ class MainActivity : AppCompatActivity() {
         binding.calendarView.monthScrollListener = {
             binding.currentMonthText.text = titleFormatter.format(it.yearMonth)
 
-            selectedDate?.let {
-                // Clear selection
-                selectedDate = null
-                binding.calendarView.notifyDateChanged(it)
-            }
+            // select first day of month -> must set to arrange recyclerview
+            selectDate(it.yearMonth.atDay(1))
         }
 
         // Calendar header(week legend) -> calendar_month_header_layout.xml
@@ -221,13 +221,34 @@ class MainActivity : AppCompatActivity() {
         binding.previousMonthImage.setOnClickListener{
             binding.calendarView.findFirstVisibleMonth()?.let {
                 binding.calendarView.smoothScrollToMonth(it.yearMonth.previous)
+                selectDate(it.yearMonth.atDay(1))
             }
         }
         binding.nextMonthImage.setOnClickListener{
             binding.calendarView.findFirstVisibleMonth()?.let {
                 binding.calendarView.smoothScrollToMonth(it.yearMonth.next)
+                selectDate(it.yearMonth.atDay(1))
             }
         }
+
+        // setup RecyclerView
+        binding.recordsRV.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+
+        rvAdapter.listData = loadData(LocalDate.now())
+        binding.recordsRV.adapter = rvAdapter
+
+        binding.recordsRV.layoutManager = LinearLayoutManager(this)
+    }
+
+    // function to get list of records of certain date
+    private fun loadData(date: LocalDate): MutableList<Record> {
+        var recordList: MutableList<Record>
+
+        runBlocking {
+            recordList = roomdb.recordDao().getRecordByDate(date)
+        }
+
+        return recordList
     }
 
     // When user clicked date
@@ -237,13 +258,25 @@ class MainActivity : AppCompatActivity() {
 
         if (oldDate != date) {
             selectedDate = date
+
             binding.calendarView.notifyDateChanged(date)
             oldDate?.let {
                 binding.calendarView.notifyDateChanged(oldDate)
             }
-        }
 
-        // 선택한 날짜의 기록 여부에 따라...
+            // if record exist, show recyclerview and its records; else hide
+            if (numOfRecords.containsKey(date)) {
+                binding.layoutRecordExist.isVisible = true
+                binding.layoutNoRecord.isVisible = false
+
+                rvAdapter.listData = loadData(date)
+                binding.recordsRV.adapter?.notifyDataSetChanged()
+            }
+            else {
+                binding.layoutRecordExist.isVisible = false
+                binding.layoutNoRecord.isVisible = true
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -264,7 +297,15 @@ class MainActivity : AppCompatActivity() {
                         numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] = 1
                     }
 
+                    // update recyclerview
                     binding.calendarView.notifyDateChanged(updatedDate)
+
+                    rvAdapter.listData = loadData(updatedDate)
+                    binding.recordsRV.adapter?.notifyDataSetChanged()
+
+                    // set visibility of each layout
+                    binding.layoutRecordExist.isVisible = true
+                    binding.layoutNoRecord.isVisible = false
                 }
                 3001 -> {
                     val changed = data?.getIntExtra("dataReset", 0)

@@ -11,4 +11,13 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="whitegray">#F6F6F6</color>
+    <color name="gray">#707070</color>
+
+    <color name="Rred">#FF3030</color>
+    <color name="Rpink">#FFBBDB</color>
+    <color name="Ryellow">#FFFA6D</color>
+    <color name="Rgreen">#9BFF71</color>
+    <color name="Rlightblue">#70EBFF</color>
+    <color name="Rblue">#4791FF</color>
 </resources>
