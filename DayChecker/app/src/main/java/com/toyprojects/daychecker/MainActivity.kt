@@ -392,6 +392,12 @@ class MainActivity : AppCompatActivity() {
                     if (changed == 3002) {
                         numOfRecords.clear()
                         binding.calendarView.notifyCalendarChanged()
+
+                        binding.layoutRecordExist.isVisible = false
+                        binding.layoutNoRecord.isVisible = true
+
+                        rvAdapter.listData.clear()
+                        binding.recordsRV.adapter?.notifyDataSetChanged()
                     }
                 }
             }
