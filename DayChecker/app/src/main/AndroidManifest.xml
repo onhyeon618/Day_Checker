@@ -12,6 +12,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:name=".App">
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/sample_admob_id"/>
+
         <activity
             android:name="com.toyprojects.daychecker.MainActivity"
             android:theme="@style/SplashTheme" >
