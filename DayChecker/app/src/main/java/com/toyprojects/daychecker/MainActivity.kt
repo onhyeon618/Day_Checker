@@ -1,6 +1,5 @@
 package com.toyprojects.daychecker
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -19,8 +18,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.storage.FirebaseStorage
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -66,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onMenuItemClick(item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.edit_record -> {
-                            Toast.makeText(applicationContext, "수정 클릭됨: $position", Toast.LENGTH_SHORT).show()
+                            openEditor(position)
                             return true
                         }
                         R.id.delete_record -> {
@@ -102,13 +99,13 @@ class MainActivity : AppCompatActivity() {
         // Add record buttons
         binding.btnNewRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
-            intent.putExtra(AppLockState.varName, EditorState.NEW_RECORD)
+            intent.putExtra(EditorState.varName, EditorState.NEW_RECORD)
             intent.putExtra("selectedDate", selectedDate.toString())
             startActivityForResult(intent, EditorState.NEW_RECORD)
         }
         binding.btnAddRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
-            intent.putExtra(AppLockState.varName, EditorState.NEW_RECORD)
+            intent.putExtra(EditorState.varName, EditorState.NEW_RECORD)
             intent.putExtra("selectedDate", selectedDate.toString())
             startActivityForResult(intent, EditorState.NEW_RECORD)
         }
@@ -312,6 +309,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun openEditor(position: Int) {
+        val tempItem = rvAdapter.listData[position]
+        val intent = Intent(applicationContext, EditorActivity::class.java)
+
+        intent.putExtra(EditorState.varName, EditorState.EDIT_RECORD)
+
+        intent.putExtra("recordID", tempItem.id)
+        intent.putExtra("recordDate", tempItem.record_date.toString())
+        intent.putExtra("recordTime", tempItem.record_time)
+        intent.putExtra("recordCondition", tempItem.condition)
+        intent.putExtra("recordState", tempItem.state)
+        intent.putExtra("recordRating", tempItem.rating)
+        intent.putExtra("recordMemo", tempItem.memo)
+
+        startActivityForResult(intent, EditorState.EDIT_RECORD)
+    }
+
     private fun deleteConfirmMsg(position: Int) {
 
         val builder = AlertDialog.Builder(this)
@@ -350,15 +364,22 @@ class MainActivity : AppCompatActivity() {
                         numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] = 1
                     }
 
-                    // update recyclerview
                     binding.calendarView.notifyDateChanged(updatedDate)
 
+                    // update recyclerview
                     rvAdapter.listData = loadData(updatedDate)
                     binding.recordsRV.adapter?.notifyDataSetChanged()
 
                     // set visibility of each layout
                     binding.layoutRecordExist.isVisible = true
                     binding.layoutNoRecord.isVisible = false
+                }
+                EditorState.EDIT_RECORD -> {
+                    val updatedDate = LocalDate.parse(data?.getStringExtra("updatedDate"), DateTimeFormatter.ISO_DATE)
+
+                    // update recyclerview
+                    rvAdapter.listData = loadData(updatedDate)
+                    binding.recordsRV.adapter?.notifyDataSetChanged()
                 }
                 3001 -> {
                     val changed = data?.getIntExtra("dataReset", 0)

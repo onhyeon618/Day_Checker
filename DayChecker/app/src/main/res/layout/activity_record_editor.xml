@@ -224,7 +224,7 @@
                 app:layout_constraintDimensionRatio="8:1" >
 
                 <RadioButton
-                    android:id="@+id/rgState1"
+                    android:id="@+id/rbState1"
                     android:tag="s1"
                     android:checked="true"
                     android:layout_width="0dp"
@@ -240,7 +240,7 @@
                     android:textSize="14sp" />
 
                 <RadioButton
-                    android:id="@+id/rgState2"
+                    android:id="@+id/rbState2"
                     android:tag="s2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -255,7 +255,7 @@
                     android:textSize="14sp" />
 
                 <RadioButton
-                    android:id="@+id/rgState3"
+                    android:id="@+id/rbState3"
                     android:tag="s3"
                     android:layout_width="0dp"
                     android:layout_weight="1"

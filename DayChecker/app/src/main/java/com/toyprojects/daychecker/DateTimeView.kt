@@ -41,6 +41,10 @@ class DateTimeView @JvmOverloads constructor(
         }
     }
 
+    fun getDTText() : String {
+        return vdtTextView.text.toString()
+    }
+
     fun setDTText(text: String) {
         vdtTextView.text = text
     }

@@ -39,8 +39,30 @@ class EditorActivity : AppCompatActivity() {
         // if writing new record, set date to be selected date, time to be current time
         val calledState = intent.getIntExtra(EditorState.varName, 0)
         if (calledState == EditorState.EDIT_RECORD) {
-            // 기존 기록의 내용을 각 위젯에 세팅하는 코드
-            // 레코드 RecyclerView 구축 선행 필요
+            binding.dtvDatePicker.setDTText(intent.getStringExtra("recordDate")!!)
+            recordDate = LocalDate.parse(intent.getStringExtra("recordDate")!!, DateTimeFormatter.ISO_DATE)
+
+            binding.dtvTimePicker.setDTText(intent.getStringExtra("recordTime")!!)
+            binding.txtRecordMemo.setText(intent.getStringExtra("recordMemo"))
+
+            binding.ratingBar.rating = intent.getFloatExtra("recordRating", 0.0F)
+
+            when (intent.getIntExtra("recordCondition", 1)) {
+                1 -> binding.rgCondition.check(binding.rbCondition1.id)
+                2 -> binding.rgCondition.check(binding.rbCondition2.id)
+                3 -> binding.rgCondition.check(binding.rbCondition3.id)
+                4 -> binding.rgCondition.check(binding.rbCondition4.id)
+                5 -> binding.rgCondition.check(binding.rbCondition5.id)
+                6 -> binding.rgCondition.check(binding.rbCondition6.id)
+                7 -> binding.rgCondition.check(binding.rbCondition7.id)
+                8 -> binding.rgCondition.check(binding.rbCondition8.id)
+            }
+
+            when (intent.getIntExtra("recordState", 1)) {
+                1 -> binding.rgState.check(binding.rbState1.id)
+                2 -> binding.rgState.check(binding.rbState2.id)
+                3 -> binding.rgState.check(binding.rbState3.id)
+            }
         }
         else {
             intent.getStringExtra("selectedDate")?.let {
@@ -83,9 +105,9 @@ class EditorActivity : AppCompatActivity() {
 
                         // get which state is checked
                         when(binding.rgState.checkedRadioButtonId) {
-                            binding.rgState1.id -> stateCode = 1
-                            binding.rgState2.id -> stateCode = 2
-                            binding.rgState3.id -> stateCode = 3
+                            binding.rbState1.id -> stateCode = 1
+                            binding.rbState2.id -> stateCode = 2
+                            binding.rbState3.id -> stateCode = 3
                         }
 
                         // Record instance
@@ -94,7 +116,7 @@ class EditorActivity : AppCompatActivity() {
 
                         if (calledState == EditorState.EDIT_RECORD) {
                             // set instance id to the one of given data
-                            userRecord.id = 1
+                            userRecord.id = intent.getIntExtra("recordID", 0)
                             editRecord(userRecord)
                         }
                         else { saveNewRecord(userRecord) }
@@ -151,13 +173,17 @@ class EditorActivity : AppCompatActivity() {
     }
 
     private fun isChanged() : Boolean {
-        if (binding.rgCondition.checkedRadioButtonId != binding.rbCondition1.id
-            || binding.rgState.checkedRadioButtonId != binding.rgState1.id
-            || binding.ratingBar.rating != 0.0F
-            || binding.txtRecordMemo.text.toString().trim() != "") {
-                return true
+        return if (intent.getIntExtra(EditorState.varName, 0) == EditorState.NEW_RECORD) {
+            (binding.rgCondition.checkedRadioButtonId != binding.rbCondition1.id
+                    || binding.rgState.checkedRadioButtonId != binding.rbState1.id
+                    || binding.ratingBar.rating != 0.0F
+                    || binding.txtRecordMemo.text.toString().trim() != "")
+        } else {
+            (binding.dtvDatePicker.getDTText() != intent.getStringExtra("recordDate")
+                    || binding.dtvTimePicker.getDTText() != intent.getStringExtra("recordTime")
+                    || binding.ratingBar.rating != intent.getFloatExtra("recordRating", 0.0F)
+                    || binding.txtRecordMemo.text.toString().trim() != intent.getStringExtra("recordMemo"))
         }
-        return false
     }
 
     // show AlertDialog when user tries to cancel it with text written
