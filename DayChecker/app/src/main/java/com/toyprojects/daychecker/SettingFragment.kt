@@ -59,7 +59,8 @@ class SettingFragment: PreferenceFragmentCompat() {
                     startActivityForResult(intent, AppLockState.REMOVE_PWD)
                 }
 
-                true
+                // set false to let states stay as before
+                false
             }
 
         // onClickListener for "비밀번호 변경하기" option
@@ -155,8 +156,7 @@ class SettingFragment: PreferenceFragmentCompat() {
                     pwdUsagePreference?.isChecked = true
                     pwdResetPreference?.isVisible = true
                     Toast.makeText(activity, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show()
-                    beforeChange =
-                        true   // need to be changed in case user enter LoginActivity again directly from current state
+                    beforeChange = true   // need to be changed in case user enter LoginActivity again directly from current state
                 }
                 AppLockState.REMOVE_PWD -> {
                     pwdUsagePreference?.isChecked = false
@@ -168,11 +168,6 @@ class SettingFragment: PreferenceFragmentCompat() {
                     Toast.makeText(activity, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-        else {
-            // when activity is closed with back button (=action canceled)
-            pwdUsagePreference?.isChecked = beforeChange
-            pwdResetPreference?.isVisible = beforeChange
         }
     }
 }
