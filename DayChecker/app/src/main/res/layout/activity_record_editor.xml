@@ -12,7 +12,7 @@
         android:background="@color/white"
         android:elevation="1dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.MainActionBar"
+        android:theme="@style/ThMainActionBar"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar

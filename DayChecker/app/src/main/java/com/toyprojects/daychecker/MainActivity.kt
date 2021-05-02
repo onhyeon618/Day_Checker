@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     private var numOfRecords = mutableMapOf<LocalDate, Int>()
 
+    // set as global to enable canceling
+    private lateinit var closeToast: Toast
+
     private val rvAdapter = DayRecordAdapter(object : DayRecordAdapter.ItemMenuClickListener {
         override fun onItemMenuClicked(position: Int) {
             val popupMenu = PopupMenu(
@@ -79,6 +82,9 @@ class MainActivity : AppCompatActivity() {
     })
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Return to main theme from splash screen
+        setTheme(R.style.ThNoActionBar)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -395,11 +401,13 @@ class MainActivity : AppCompatActivity() {
     // BackPress twice to close the app
     override fun onBackPressed() {
         if (doubleBackPressed) {
+            closeToast.cancel()
             super.onBackPressed()
             return
         }
         this.doubleBackPressed = true
-        Toast.makeText(this, "\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        closeToast = Toast.makeText(this, "\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+        closeToast.show()
         Handler(Looper.getMainLooper()).postDelayed({ doubleBackPressed = false }, 2000)
     }
 }

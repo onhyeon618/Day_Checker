@@ -14,7 +14,7 @@
 
         <activity
             android:name="com.toyprojects.daychecker.MainActivity"
-            android:theme="@style/Theme.NoActionBar" >
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,21 +23,21 @@
 
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.NoActionBar" >
+            android:theme="@style/ThNoActionBar" >
         </activity>
 
         <activity
             android:name=".EditorActivity"
-            android:theme="@style/Theme.NoActionBar"
+            android:theme="@style/ThNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity android:name=".SettingsActivity"
-            android:theme="@style/Theme.NoActionBar" >
+            android:theme="@style/ThNoActionBar" >
         </activity>
 
         <activity android:name=".InquiryActivity"
-            android:theme="@style/Theme.NoActionBar"
+            android:theme="@style/ThNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
