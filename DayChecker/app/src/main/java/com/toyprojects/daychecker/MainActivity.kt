@@ -18,6 +18,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -120,7 +121,9 @@ class MainActivity : AppCompatActivity() {
         roomdb = Room.databaseBuilder(
                 applicationContext,
                 RecordDB::class.java, "dayCheckRecord"
-            ).build()
+            )
+            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+            .build()
 
         runBlocking {
             // Read entire database to get <date - num of records> pair

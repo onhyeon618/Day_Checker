@@ -8,6 +8,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -15,6 +16,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.toyprojects.daychecker.*
 import com.toyprojects.daychecker.R
+import com.toyprojects.daychecker.DataExportActivity
 import com.toyprojects.daychecker.database.RecordDB
 import kotlinx.coroutines.runBlocking
 
@@ -32,6 +34,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         val pwdUsagePreference: SwitchPreferenceCompat? = findPreference("password_usage")
         val pwdResetPreference: Preference? = findPreference("reset_password")
 
+        val dataExportPreference: Preference? = findPreference("export_data")
         val dataResetPreference: Preference? = findPreference("reset_data")
 
         val appVersionPreference: Preference? = findPreference("app_version")
@@ -74,6 +77,11 @@ class SettingFragment: PreferenceFragmentCompat() {
             true
         }
 
+        dataExportPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            startActivity(Intent(activity, DataExportActivity::class.java))
+            true
+        }
+
         dataResetPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             val builder = AlertDialog.Builder(activity)
 
@@ -83,7 +91,9 @@ class SettingFragment: PreferenceFragmentCompat() {
                     val roomdb = Room.databaseBuilder(
                         activity,
                         RecordDB::class.java, "dayCheckRecord"
-                    ).build()
+                        )
+                        .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+                        .build()
 
                     runBlocking {
                         roomdb.recordDao().deleteAll()

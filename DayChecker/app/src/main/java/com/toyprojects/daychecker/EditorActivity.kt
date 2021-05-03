@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.toyprojects.daychecker.database.Record
 import com.toyprojects.daychecker.database.RecordDB
 import com.toyprojects.daychecker.databinding.ActivityRecordEditorBinding
@@ -32,7 +33,9 @@ class EditorActivity : AppCompatActivity() {
         recordDB = Room.databaseBuilder(
             this,
             RecordDB::class.java, "dayCheckRecord"
-        ).build()
+            )
+            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+            .build()
 
         // Check where is the page called from:
         // if page opened for editing existing record, set its data on corresponding place

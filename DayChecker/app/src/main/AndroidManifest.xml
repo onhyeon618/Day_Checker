@@ -45,6 +45,11 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
+        <activity android:name=".DataExportActivity"
+            android:theme="@style/ThNoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+        </activity>
+
     </application>
 
 </manifest>

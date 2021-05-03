@@ -1,6 +1,7 @@
 package com.toyprojects.daychecker.database
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import java.time.LocalDate
 
 @Dao
@@ -26,4 +27,7 @@ interface RecordDao {
 
     @Query("DELETE FROM dayCheckRecord")
     suspend fun deleteAll()
+
+    @RawQuery
+    suspend fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery?): Int
 }
