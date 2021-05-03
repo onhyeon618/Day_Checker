@@ -51,7 +51,7 @@
         <Preference
             app:key="app_version"
             app:title="어플리케이션 버전"
-            app:summary="v1.0.0"
+            app:summary="버전 이름"
             app:iconSpaceReserved="false" />
 
         <Preference

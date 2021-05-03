@@ -11,8 +11,9 @@ import androidx.room.Room
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.toyprojects.daychecker.AppLockState
-import com.toyprojects.daychecker.LoginActivity
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.toyprojects.daychecker.*
 import com.toyprojects.daychecker.R
 import com.toyprojects.daychecker.database.RecordDB
 import kotlinx.coroutines.runBlocking
@@ -21,6 +22,8 @@ class SettingFragment: PreferenceFragmentCompat() {
     private var beforeChange = false
 
     private var mInterstitialAd: InterstitialAd? = null
+
+    private val currentVersion = BuildConfig.VERSION_NAME
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
@@ -31,6 +34,7 @@ class SettingFragment: PreferenceFragmentCompat() {
 
         val dataResetPreference: Preference? = findPreference("reset_data")
 
+        val appVersionPreference: Preference? = findPreference("app_version")
         val supportDeveloperPreference: Preference? = findPreference("support_developer")
 
         MobileAds.initialize(activity)
@@ -99,10 +103,33 @@ class SettingFragment: PreferenceFragmentCompat() {
             true
         }
 
+        appVersionPreference?.summary = "v$currentVersion"
+        // appVersionPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+        //     checkForUpdate()
+        //     true
+        // }
+
         supportDeveloperPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             // Show full-screen google Ad
             showInterstitialAd()
             true
+        }
+    }
+
+    // 최종 테스트 후 적용 여부 결정 예정
+    private fun checkForUpdate() {
+        val activity = context as Activity
+
+        val appUpdateManager = AppUpdateManagerFactory.create(activity)
+
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                Toast.makeText(activity, "새 버전이 출시되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
