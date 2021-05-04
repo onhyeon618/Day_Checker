@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
-                    startActivityForResult(intent, 3001)
+                    startActivityForResult(intent, 4321)
                     true
                 }
                 else -> false
@@ -390,9 +390,9 @@ class MainActivity : AppCompatActivity() {
                     rvAdapter.listData = loadData(updatedDate)
                     binding.recordsRV.adapter?.notifyDataSetChanged()
                 }
-                3001 -> {
+                4321 -> {
                     val changed = data?.getIntExtra("dataReset", 0)
-                    if (changed == 3002) {
+                    if (changed == 4002) {
                         numOfRecords.clear()
                         binding.calendarView.notifyCalendarChanged()
 
@@ -401,6 +401,26 @@ class MainActivity : AppCompatActivity() {
 
                         rvAdapter.listData.clear()
                         binding.recordsRV.adapter?.notifyDataSetChanged()
+                    }
+                    val imported = data?.getIntExtra("dataImport", 0)
+                    if (imported == DataBackupState.DATA_IMPORT) {
+                        // re-build database
+                        roomdb = Room.databaseBuilder(
+                            applicationContext,
+                            RecordDB::class.java, "dayCheckRecord"
+                        ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+
+                        runBlocking {
+                            val itemCounts = roomdb.recordDao().countRecordPerDay()
+
+                            for (each in itemCounts) {
+                                numOfRecords[each.record_date] = each.num_of_records
+                            }
+                        }
+
+                        binding.calendarView.notifyCalendarChanged()
+                        selectedDate = null   // must set it to call selectDate properly
+                        selectDate(LocalDate.now())
                     }
                 }
             }

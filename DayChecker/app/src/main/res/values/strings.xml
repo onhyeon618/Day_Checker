@@ -7,6 +7,7 @@
     <string name="save_record">저장</string>
     <string name="inquiries">문의하기</string>
     <string name="data_export">데이터 백업</string>
+    <string name="data_import">데이터 복원</string>
 
     <string name="pwd_insert_current">비밀번호를 입력하세요.</string>
     <string name="pwd_new_input">사용할 비밀번호를 입력하세요.</string>
@@ -47,6 +48,15 @@
     <string name="db_export_pwd">복원 시 사용할 비밀번호</string>
     <string name="db_export_pwd_hint">8~15자 이내로 입력하세요</string>
     <string name="db_export_btn">데이터 백업하기</string>
+    
+    <string name="db_import_main">데이터를 복원하시겠습니까?</string>
+    <string name="db_import_alert">
+        ! 7일 내에 백업하신 데이터를 복원할 수 있습니다.\n\n! 백업 시 등록하신 이메일과 비밀번호를 사용해 복원하세요.\n\n! 복원 데이터를 가져오실 경우 현재 기기에 저장된 데이터는 덮어씌워집니다.
+    </string>
+    <string name="db_import_email">복원 등록 이메일</string>
+    <string name="db_import_pwd">비밀번호</string>
+    <string name="db_import_pwd_hint">8~15자 이내</string>
+    <string name="db_import_btn">데이터 복원하기</string>
 
     <string name="sample_admob_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="sample_unit_id">ca-app-pub-3940256099942544/1033173712</string>

@@ -35,6 +35,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         val pwdResetPreference: Preference? = findPreference("reset_password")
 
         val dataExportPreference: Preference? = findPreference("export_data")
+        val dataImportPreference: Preference? = findPreference("import_data")
         val dataResetPreference: Preference? = findPreference("reset_data")
 
         val appVersionPreference: Preference? = findPreference("app_version")
@@ -49,12 +50,11 @@ class SettingFragment: PreferenceFragmentCompat() {
             pwdResetPreference?.isVisible = pwdUsagePreference.isChecked
         }
 
-        val intent = Intent(activity, LoginActivity::class.java)
-
         // set ChangeListener on the switch of "비밀번호 사용하기" option
         pwdUsagePreference?.onPreferenceChangeListener=
             Preference.OnPreferenceChangeListener { _, newValue ->
                 val enabled = newValue == true
+                val intent = Intent(activity, LoginActivity::class.java)
 
                 // start LoginActivity with state option
                 if (enabled) {
@@ -72,16 +72,29 @@ class SettingFragment: PreferenceFragmentCompat() {
 
         // onClickListener for "비밀번호 변경하기" option
         pwdResetPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
             intent.putExtra(AppLockState.varName, AppLockState.CHANGE_PWD)
             startActivityForResult(intent, AppLockState.CHANGE_PWD)
             true
         }
 
+        // "데이터 백업하기"
         dataExportPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
-            startActivity(Intent(activity, DataExportActivity::class.java))
+            val intent = Intent(activity, DataExportActivity::class.java)
+            intent.putExtra(DataBackupState.varName, DataBackupState.DATA_EXPORT)
+            startActivity(intent)
             true
         }
 
+        // "데이터 복원하기"
+        dataImportPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            val intent = Intent(activity, DataExportActivity::class.java)
+            intent.putExtra(DataBackupState.varName, DataBackupState.DATA_IMPORT)
+            startActivityForResult(intent, DataBackupState.DATA_IMPORT)
+            true
+        }
+
+        // "데이터 초기화"
         dataResetPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             val builder = AlertDialog.Builder(activity)
 
@@ -102,7 +115,7 @@ class SettingFragment: PreferenceFragmentCompat() {
                     Toast.makeText(activity, "모든 기록이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
 
                     val main = Intent()
-                    main.putExtra("dataReset", 3002)
+                    main.putExtra("dataReset", 4002)
                     activity.setResult(RESULT_OK, main)
                 }
                 .setNegativeButton("취소", null)
@@ -183,6 +196,7 @@ class SettingFragment: PreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val activity = context as Activity
 
         val pwdUsagePreference: SwitchPreferenceCompat? = findPreference("password_usage")
         val pwdResetPreference: Preference? = findPreference("reset_password")
@@ -203,6 +217,11 @@ class SettingFragment: PreferenceFragmentCompat() {
                 }
                 AppLockState.CHANGE_PWD -> {
                     Toast.makeText(activity, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                DataBackupState.DATA_IMPORT -> {
+                    val main = Intent()
+                    main.putExtra("dataImport", DataBackupState.DATA_IMPORT)
+                    activity.setResult(RESULT_OK, main)
                 }
             }
         }

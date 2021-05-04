@@ -1,14 +1,18 @@
 package com.toyprojects.daychecker
 
+import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -17,7 +21,12 @@ import com.toyprojects.daychecker.databinding.ActivityDataExportBinding
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileInputStream
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class DataExportActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDataExportBinding
@@ -41,10 +50,39 @@ class DataExportActivity : AppCompatActivity() {
         val topAppBar = binding.toolbar
         topAppBar.setNavigationIcon(R.drawable.back_button);
         topAppBar.setBackgroundColor(255)
-        topAppBar.setTitle(R.string.data_export)
 
         topAppBar.setNavigationOnClickListener {
             finish()
+        }
+
+        // change each view text based on called state
+        when (intent.getIntExtra(DataBackupState.varName, 0)) {
+            DataBackupState.DATA_EXPORT -> {
+                topAppBar.setTitle(R.string.data_export)
+
+                binding.txtTitle.text = getString(R.string.db_export_main)
+                binding.txtDataInformations.text = getString(R.string.db_export_alert)
+                binding.checkDataAgreement.isVisible = true
+                binding.txtEmailInfo.text = getString(R.string.db_export_email)
+                binding.txtPwdInfo.text = getString(R.string.db_export_pwd)
+                binding.txtExportPwd.hint = getString(R.string.db_export_pwd_hint)
+                binding.btnExportData.text = getString(R.string.db_export_btn)
+
+                binding.btnExportData.setOnClickListener(userDataExportListener)
+            }
+            DataBackupState.DATA_IMPORT -> {
+                topAppBar.setTitle(R.string.data_import)
+
+                binding.txtTitle.text = getString(R.string.db_import_main)
+                binding.txtDataInformations.text = getString(R.string.db_import_alert)
+                binding.checkDataAgreement.isVisible = false
+                binding.txtEmailInfo.text = getString(R.string.db_import_email)
+                binding.txtPwdInfo.text = getString(R.string.db_import_pwd)
+                binding.txtExportPwd.hint = getString(R.string.db_import_pwd_hint)
+                binding.btnExportData.text = getString(R.string.db_import_btn)
+                
+                binding.btnExportData.setOnClickListener(userDataImportListener)
+            }
         }
 
         // remove error color when checked
@@ -86,8 +124,23 @@ class DataExportActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
 
-        binding.btnExportData.setOnClickListener(userDataExportListener)
+    private fun isInternetConnected(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = cm.activeNetwork ?: return false
+            val actNetwork = cm.getNetworkCapabilities(networkCapabilities) ?: return false
+            return when {
+                actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            val nwInfo = cm.activeNetworkInfo ?: return false
+            return nwInfo.isConnected
+        }
     }
 
     private val userDataExportListener = View.OnClickListener {
@@ -98,7 +151,10 @@ class DataExportActivity : AppCompatActivity() {
             binding.txtExportPwd.clearFocus()
 
             // check input validations
-            if (!binding.checkDataAgreement.isChecked) {
+            if (!isInternetConnected(this)) {
+                Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (!binding.checkDataAgreement.isChecked) {
                 binding.checkDataAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
                 Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
                 clickable = true
@@ -118,8 +174,7 @@ class DataExportActivity : AppCompatActivity() {
                 binding.inputLayoutExportPwd.requestFocus()
                 Toast.makeText(this, "비밀번호는 8~15자 이내로 입력하세요.", Toast.LENGTH_SHORT).show()
                 clickable = true
-            }
-            else {
+            } else {
                 recordDB = Room.databaseBuilder(
                     this,
                     RecordDB::class.java, "dayCheckRecord"
@@ -127,6 +182,40 @@ class DataExportActivity : AppCompatActivity() {
 
                 exportDB()
                 uploadDBtoStorage()
+            }
+        }
+    }
+
+    private val userDataImportListener = View.OnClickListener {
+        if (clickable) {
+            clickable = false
+
+            binding.txtExportPwd.clearFocus()
+            binding.txtExportEmail.clearFocus()
+
+            // check input validations
+            if (!isInternetConnected(this)) {
+                Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (userEmail.isEmpty()) {
+                binding.inputLayoutExportEmail.requestFocus()
+                Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (!isEmailValid) {
+                binding.inputLayoutExportEmail.requestFocus()
+                Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else if (userPwd.isEmpty()) {
+                binding.inputLayoutExportPwd.requestFocus()
+                Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            } else {
+                recordDB = Room.databaseBuilder(
+                    this,
+                    RecordDB::class.java, "dayCheckRecord"
+                ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+
+                downloadFromFirebase()
             }
         }
     }
@@ -155,6 +244,7 @@ class DataExportActivity : AppCompatActivity() {
                 val downloadUri = task.result
                 uploadDBtoFirestore(downloadUri.toString())
             } else {
+                clickable = true
                 Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -162,9 +252,9 @@ class DataExportActivity : AppCompatActivity() {
 
     private fun uploadDBtoFirestore(uploadedPath: String) {
         val exportItem = hashMapOf(
-            "userPwd" to userPwd,   // 비밀번호에 해시 적용 필요
+            "userPwd" to getEncrypt(userPwd),
             "storagePath" to uploadedPath,
-            "timestamp" to FieldValue.serverTimestamp()
+            "backupDate" to LocalDate.now().toString()
         )
 
         // upload certification information to firebase
@@ -177,7 +267,62 @@ class DataExportActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener {
+                clickable = true
                 Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun downloadFromFirebase() {
+        val docRef = db.collection("UserDataBackup").document(userEmail)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    if (document.data?.get("userPwd").toString() != getEncrypt(userPwd)) {
+                        Toast.makeText(this, "잘못된 비밀번호입니다.", Toast.LENGTH_SHORT).show()
+                        clickable = true
+                    } else if (ChronoUnit.DAYS.between(LocalDate.parse(document.data?.get("backupDate").toString(), DateTimeFormatter.ISO_DATE), LocalDate.now()) > 7) {
+                        Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
+                        clickable = true
+                    } else {
+                        val fileReference = storage.getReferenceFromUrl(document.data?.get("storagePath").toString())
+                        val localFile = File.createTempFile("dcdata", "", this.cacheDir)
+
+                        fileReference.getFile(localFile).addOnSuccessListener {
+                            // data is returned from server
+                            // replace device database file with the one got from server
+                            localFile.copyTo(File(recordDB.openHelper.writableDatabase.path), true)
+                            localFile.delete()
+
+                            Toast.makeText(this, "복원이 완료되었습니다!", Toast.LENGTH_SHORT).show()
+
+                            setResult(RESULT_OK)
+                            finish()
+                        }.addOnFailureListener {
+                            Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            clickable = true
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
+                    clickable = true
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                clickable = true
+            }
+    }
+
+    private fun getEncrypt(plaintext : String) : String{
+        val md = MessageDigest.getInstance("SHA-512")
+        val digest = md.digest(plaintext.toByteArray())
+
+        val no = BigInteger(1, digest)
+        var hashtext: String = no.toString(16)
+
+        while (hashtext.length < 128) {
+            hashtext = "0$hashtext"
+        }
+        return hashtext
     }
 }

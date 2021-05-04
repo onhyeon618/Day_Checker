@@ -13,3 +13,9 @@ object EditorState {
     val NEW_RECORD = 2001
     val EDIT_RECORD = 2002
 }
+
+object DataBackupState {
+    const val varName = "dataBackupState"
+    val DATA_EXPORT = 3001
+    val DATA_IMPORT = 3002
+}
