@@ -65,9 +65,11 @@
         </Preference>
 
         <Preference
-            app:key="support_developer"
-            app:title="개발자 지원하기"
-            app:iconSpaceReserved="false" />
+            app:key="opensource_license"
+            app:title="오픈소스 라이선스"
+            app:iconSpaceReserved="false" >
+
+        </Preference>
 
     </PreferenceCategory>
 

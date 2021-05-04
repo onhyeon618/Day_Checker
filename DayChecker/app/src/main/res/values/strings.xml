@@ -8,6 +8,7 @@
     <string name="inquiries">문의하기</string>
     <string name="data_export">데이터 백업</string>
     <string name="data_import">데이터 복원</string>
+    <string name="opensource_lisense">오픈소스 라이선스</string>
 
     <string name="pwd_insert_current">비밀번호를 입력하세요.</string>
     <string name="pwd_new_input">사용할 비밀번호를 입력하세요.</string>

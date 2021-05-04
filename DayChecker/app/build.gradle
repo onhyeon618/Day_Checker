@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
 
@@ -80,4 +81,7 @@ dependencies {
     // Ads
     implementation project(':nativetemplates')
     implementation 'com.google.android.gms:play-services-ads:20.1.0'
+
+    // open source license
+    implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
 }

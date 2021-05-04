@@ -50,6 +50,14 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/ThMainActionBar" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/ThMainActionBar" />
+
     </application>
 
 </manifest>

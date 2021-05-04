@@ -9,6 +9,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.toyprojects.daychecker.*
@@ -34,6 +35,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         val dataResetPreference: Preference? = findPreference("reset_data")
 
         val appVersionPreference: Preference? = findPreference("app_version")
+        val opensourceLisensePreference: Preference? = findPreference("opensource_license")
 
         // save current state for later use
         if (pwdUsagePreference != null) {
@@ -123,7 +125,15 @@ class SettingFragment: PreferenceFragmentCompat() {
         //     checkForUpdate()
         //     true
         // }
+
+        // "오픈소스 라이선스"
+        opensourceLisensePreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            OssLicensesMenuActivity.setActivityTitle(getString(R.string.opensource_lisense))
+            startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
+            true
+        }
     }
+
 
     // 최종 테스트 후 적용 여부 결정 예정
     private fun checkForUpdate() {
