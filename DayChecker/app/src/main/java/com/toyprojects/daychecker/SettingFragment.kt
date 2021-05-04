@@ -9,9 +9,6 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.toyprojects.daychecker.*
@@ -22,8 +19,6 @@ import kotlinx.coroutines.runBlocking
 
 class SettingFragment: PreferenceFragmentCompat() {
     private var beforeChange = false
-
-    private var mInterstitialAd: InterstitialAd? = null
 
     private val currentVersion = BuildConfig.VERSION_NAME
 
@@ -39,10 +34,6 @@ class SettingFragment: PreferenceFragmentCompat() {
         val dataResetPreference: Preference? = findPreference("reset_data")
 
         val appVersionPreference: Preference? = findPreference("app_version")
-        val supportDeveloperPreference: Preference? = findPreference("support_developer")
-
-        MobileAds.initialize(activity)
-        loadInterstitialAd()
 
         // save current state for later use
         if (pwdUsagePreference != null) {
@@ -126,17 +117,12 @@ class SettingFragment: PreferenceFragmentCompat() {
             true
         }
 
+        // "어플리케이션 버전"
         appVersionPreference?.summary = "v$currentVersion"
         // appVersionPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
         //     checkForUpdate()
         //     true
         // }
-
-        supportDeveloperPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
-            // Show full-screen google Ad
-            showInterstitialAd()
-            true
-        }
     }
 
     // 최종 테스트 후 적용 여부 결정 예정
@@ -153,44 +139,6 @@ class SettingFragment: PreferenceFragmentCompat() {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                 Toast.makeText(activity, "새 버전이 출시되었습니다.", Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun loadInterstitialAd() {
-        val activity = context as Activity
-        val adRequest = AdRequest.Builder().build()
-
-        InterstitialAd.load(
-            activity, getString(R.string.sample_unit_id), adRequest, object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(p0: LoadAdError) {
-                    mInterstitialAd = null
-                }
-                override fun onAdLoaded(p0: InterstitialAd) {
-                    mInterstitialAd = p0
-                }
-            }
-        )
-    }
-
-    private fun showInterstitialAd() {
-        val activity = context as Activity
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    mInterstitialAd = null
-                    loadInterstitialAd()
-                }
-                override fun onAdFailedToShowFullScreenContent(p0: AdError?) {
-                    Toast.makeText(activity, "오류가 발생했습니다. 잠시 후 다시 시도하세요.", Toast.LENGTH_SHORT).show()
-                    mInterstitialAd = null
-                }
-                override fun onAdShowedFullScreenContent() {
-                }
-            }
-            mInterstitialAd?.show(activity)
-        } else {
-            Toast.makeText(activity, "오류가 발생했습니다. 잠시 후 다시 시도하세요.", Toast.LENGTH_SHORT).show()
-            loadInterstitialAd()
         }
     }
 
