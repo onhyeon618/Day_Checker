@@ -40,8 +40,6 @@ class DataExportActivity : AppCompatActivity() {
     private var userPwd = ""
     private var isPwdValid = false
 
-    private var clickable = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDataExportBinding.inflate(layoutInflater)
@@ -144,79 +142,79 @@ class DataExportActivity : AppCompatActivity() {
     }
 
     private val userDataExportListener = View.OnClickListener {
-        if (clickable) {
-            clickable = false
+        binding.btnExportData.isClickable = false
 
-            binding.txtExportEmail.clearFocus()
-            binding.txtExportPwd.clearFocus()
+        binding.txtExportEmail.clearFocus()
+        binding.txtExportPwd.clearFocus()
 
-            // check input validations
-            if (!isInternetConnected(this)) {
-                Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (!binding.checkDataAgreement.isChecked) {
-                binding.checkDataAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
-                Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (userEmail.isEmpty()) {
-                binding.inputLayoutExportEmail.requestFocus()
-                Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (!isEmailValid) {
-                binding.inputLayoutExportEmail.requestFocus()
-                Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (userPwd.isEmpty()) {
-                binding.inputLayoutExportPwd.requestFocus()
-                Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (!isPwdValid) {
-                binding.inputLayoutExportPwd.requestFocus()
-                Toast.makeText(this, "비밀번호는 8~15자 이내로 입력하세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else {
-                recordDB = Room.databaseBuilder(
-                    this,
-                    RecordDB::class.java, "dayCheckRecord"
-                ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+        // check input validations
+        if (!isInternetConnected(this)) {
+            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (!binding.checkDataAgreement.isChecked) {
+            binding.checkDataAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
+            Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (userEmail.isEmpty()) {
+            binding.inputLayoutExportEmail.requestFocus()
+            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (!isEmailValid) {
+            binding.inputLayoutExportEmail.requestFocus()
+            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (userPwd.isEmpty()) {
+            binding.inputLayoutExportPwd.requestFocus()
+            Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (!isPwdValid) {
+            binding.inputLayoutExportPwd.requestFocus()
+            Toast.makeText(this, "비밀번호는 8~15자 이내로 입력하세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else {
+            binding.progressDataExport.visibility = View.VISIBLE
 
-                exportDB()
-                uploadDBtoStorage()
-            }
+            recordDB = Room.databaseBuilder(
+                this,
+                RecordDB::class.java, "dayCheckRecord"
+            ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+
+            exportDB()
+            uploadDBtoStorage()
         }
     }
 
     private val userDataImportListener = View.OnClickListener {
-        if (clickable) {
-            clickable = false
+        binding.btnExportData.isClickable = false
 
-            binding.txtExportPwd.clearFocus()
-            binding.txtExportEmail.clearFocus()
+        binding.txtExportPwd.clearFocus()
+        binding.txtExportEmail.clearFocus()
 
-            // check input validations
-            if (!isInternetConnected(this)) {
-                Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (userEmail.isEmpty()) {
-                binding.inputLayoutExportEmail.requestFocus()
-                Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (!isEmailValid) {
-                binding.inputLayoutExportEmail.requestFocus()
-                Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else if (userPwd.isEmpty()) {
-                binding.inputLayoutExportPwd.requestFocus()
-                Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
-            } else {
-                recordDB = Room.databaseBuilder(
-                    this,
-                    RecordDB::class.java, "dayCheckRecord"
-                ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+        // check input validations
+        if (!isInternetConnected(this)) {
+            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (userEmail.isEmpty()) {
+            binding.inputLayoutExportEmail.requestFocus()
+            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (!isEmailValid) {
+            binding.inputLayoutExportEmail.requestFocus()
+            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else if (userPwd.isEmpty()) {
+            binding.inputLayoutExportPwd.requestFocus()
+            Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
+            binding.btnExportData.isClickable = true
+        } else {
+            binding.progressDataExport.visibility = View.VISIBLE
 
-                downloadFromFirebase()
-            }
+            recordDB = Room.databaseBuilder(
+                this,
+                RecordDB::class.java, "dayCheckRecord"
+            ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+
+            downloadFromFirebase()
         }
     }
 
@@ -244,7 +242,8 @@ class DataExportActivity : AppCompatActivity() {
                 val downloadUri = task.result
                 uploadDBtoFirestore(downloadUri.toString())
             } else {
-                clickable = true
+                binding.btnExportData.isClickable = true
+                binding.progressDataExport.visibility = View.GONE
                 Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -263,11 +262,13 @@ class DataExportActivity : AppCompatActivity() {
             .document(userEmail)
             .set(exportItem)
             .addOnSuccessListener {
+                binding.progressDataExport.visibility = View.GONE
                 Toast.makeText(this, "데이터 백업이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {
-                clickable = true
+                binding.btnExportData.isClickable = true
+                binding.progressDataExport.visibility = View.GONE
                 Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
     }
@@ -278,11 +279,13 @@ class DataExportActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     if (document.data?.get("userPwd").toString() != getEncrypt(userPwd)) {
+                        binding.progressDataExport.visibility = View.GONE
                         Toast.makeText(this, "잘못된 비밀번호입니다.", Toast.LENGTH_SHORT).show()
-                        clickable = true
+                        binding.btnExportData.isClickable = true
                     } else if (ChronoUnit.DAYS.between(LocalDate.parse(document.data?.get("backupDate").toString(), DateTimeFormatter.ISO_DATE), LocalDate.now()) > 7) {
+                        binding.progressDataExport.visibility = View.GONE
                         Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
-                        clickable = true
+                        binding.btnExportData.isClickable = true
                     } else {
                         val fileReference = storage.getReferenceFromUrl(document.data?.get("storagePath").toString())
                         val localFile = File.createTempFile("dcdata", "", this.cacheDir)
@@ -293,23 +296,27 @@ class DataExportActivity : AppCompatActivity() {
                             localFile.copyTo(File(recordDB.openHelper.writableDatabase.path), true)
                             localFile.delete()
 
+                            binding.progressDataExport.visibility = View.GONE
                             Toast.makeText(this, "복원이 완료되었습니다!", Toast.LENGTH_SHORT).show()
 
                             setResult(RESULT_OK)
                             finish()
                         }.addOnFailureListener {
+                            binding.progressDataExport.visibility = View.GONE
                             Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                            clickable = true
+                            binding.btnExportData.isClickable = true
                         }
                     }
                 } else {
+                    binding.progressDataExport.visibility = View.GONE
                     Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
-                    clickable = true
+                    binding.btnExportData.isClickable = true
                 }
             }
             .addOnFailureListener { exception ->
+                binding.progressDataExport.visibility = View.GONE
                 Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                clickable = true
+                binding.btnExportData.isClickable = true
             }
     }
 
