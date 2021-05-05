@@ -59,7 +59,7 @@
             android:id="@+id/currentMonthText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:fontFamily="@font/medium"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -161,7 +161,7 @@
                             android:gravity="center"
                             android:text="@string/no_record1"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                             android:gravity="center"
                             android:text="@string/no_record2"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnNewRecord"

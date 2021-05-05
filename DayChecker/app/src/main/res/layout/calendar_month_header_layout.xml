@@ -21,7 +21,7 @@
             android:text="SUN"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText2"
@@ -32,7 +32,7 @@
             android:text="MON"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText3"
@@ -43,7 +43,7 @@
             android:text="TUE"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText4"
@@ -54,7 +54,7 @@
             android:text="WED"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText5"
@@ -65,7 +65,7 @@
             android:text="THU"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText6"
@@ -76,7 +76,7 @@
             android:text="FRI"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/legendText7"
@@ -87,7 +87,7 @@
             android:text="SAT"
             android:fontFamily="@font/light"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
     </LinearLayout>
 

@@ -50,7 +50,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/dtvTimePicker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textSize="16sp"
+                app:textSize="16dp"
                 app:textColor="@color/black"
                 app:fontFamily="@font/medium"
                 app:vdtImage="@drawable/date_icon"
@@ -69,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dtvDatePicker"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textSize="16sp"
+                app:textSize="16dp"
                 app:textColor="@color/black"
                 app:fontFamily="@font/medium"
                 app:vdtImage="@drawable/time_icon"
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/record_condition"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dtvDatePicker" />
 
@@ -204,7 +204,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/record_state"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rgCondition" />
 
@@ -237,7 +237,7 @@
                     android:text="@string/record_state_first"
                     android:gravity="center"
                     android:fontFamily="@font/medium"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <RadioButton
                     android:id="@+id/rbState2"
@@ -252,7 +252,7 @@
                     android:text="@string/record_state_second"
                     android:gravity="center"
                     android:fontFamily="@font/medium"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <RadioButton
                     android:id="@+id/rbState3"
@@ -267,7 +267,7 @@
                     android:text="@string/record_state_third"
                     android:gravity="center"
                     android:fontFamily="@font/medium"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </RadioGroup>
 
             <TextView
@@ -280,7 +280,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/record_score"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rgState" />
 
@@ -306,7 +306,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/record_memo"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textRating" />
 
@@ -338,7 +338,7 @@
                     android:gravity="top"
                     android:inputType="textMultiLine"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -177,6 +177,9 @@
                 android:layout_marginBottom="24dp"
                 app:backgroundTint="@color/mainTheme"
                 android:text="@string/inquiry_send"
+                android:textSize="18dp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

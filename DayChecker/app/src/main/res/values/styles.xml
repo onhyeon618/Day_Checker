@@ -4,6 +4,7 @@
         <item name="colorPrimaryDark">@color/statusBar</item>
         <item name="colorAccent">@color/highlight</item>
         <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textSize">18dp</item>
     </style>
 
     <style name="ThNoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
