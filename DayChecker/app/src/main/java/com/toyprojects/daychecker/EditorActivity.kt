@@ -81,7 +81,10 @@ class EditorActivity : AppCompatActivity() {
 
         topAppBar.setNavigationOnClickListener {
             if (isChanged()) { showEndMsg() }
-            else { finish() }
+            else {
+                finish()
+                overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+            }
         }
 
         topAppBar.setOnMenuItemClickListener { menuItem ->
@@ -130,6 +133,7 @@ class EditorActivity : AppCompatActivity() {
                         setResult(RESULT_OK, parent)
 
                         finish()
+                        overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                     }
                     true
                 }
@@ -194,7 +198,10 @@ class EditorActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         builder.setMessage("변경사항이 있습니다. 변경사항을 삭제하시겠습니까?")
-            .setPositiveButton("삭제") { _, _ -> finish() }
+            .setPositiveButton("삭제") { _, _ ->
+                finish()
+                overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+            }
             .setNegativeButton("취소", null)
             .setCancelable(true)
 
@@ -203,6 +210,9 @@ class EditorActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (isChanged()) { showEndMsg() }
-        else { finish() }
+        else {
+            finish()
+            overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+        }
     }
 }

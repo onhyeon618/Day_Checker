@@ -57,12 +57,7 @@
         <Preference
             app:key="send_inquiry"
             app:title="문의 보내기"
-            app:iconSpaceReserved="false" >
-
-            <intent
-                android:targetPackage="com.toyprojects.daychecker"
-                android:targetClass="com.toyprojects.daychecker.InquiryActivity"/>
-        </Preference>
+            app:iconSpaceReserved="false" />
 
         <Preference
             app:key="opensource_license"

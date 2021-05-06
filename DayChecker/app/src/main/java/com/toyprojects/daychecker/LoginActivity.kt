@@ -215,6 +215,7 @@ class LoginActivity : AppCompatActivity() {
         }
         else {
             finish()
+            overridePendingTransition(R.anim.no_transition, R.anim.fadeout)
         }
     }
 }

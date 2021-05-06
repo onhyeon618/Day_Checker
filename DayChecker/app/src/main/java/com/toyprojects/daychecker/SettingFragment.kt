@@ -35,6 +35,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         val dataResetPreference: Preference? = findPreference("reset_data")
 
         val appVersionPreference: Preference? = findPreference("app_version")
+        val sendInquiryPreference: Preference? = findPreference("send_inquiry")
         val opensourceLisensePreference: Preference? = findPreference("opensource_license")
 
         // save current state for later use
@@ -53,10 +54,12 @@ class SettingFragment: PreferenceFragmentCompat() {
                 if (enabled) {
                     intent.putExtra(AppLockState.varName, AppLockState.ENABLE_PWD)
                     startActivityForResult(intent, AppLockState.ENABLE_PWD)
+                    activity.overridePendingTransition(R.anim.fadein, R.anim.no_transition)
                 }
                 else {
                     intent.putExtra(AppLockState.varName, AppLockState.REMOVE_PWD)
                     startActivityForResult(intent, AppLockState.REMOVE_PWD)
+                    activity.overridePendingTransition(R.anim.fadein, R.anim.no_transition)
                 }
 
                 // set false to let states stay as before
@@ -68,6 +71,7 @@ class SettingFragment: PreferenceFragmentCompat() {
             val intent = Intent(activity, LoginActivity::class.java)
             intent.putExtra(AppLockState.varName, AppLockState.CHANGE_PWD)
             startActivityForResult(intent, AppLockState.CHANGE_PWD)
+            activity.overridePendingTransition(R.anim.fadein, R.anim.no_transition)
             true
         }
 
@@ -76,6 +80,7 @@ class SettingFragment: PreferenceFragmentCompat() {
             val intent = Intent(activity, DataExportActivity::class.java)
             intent.putExtra(DataBackupState.varName, DataBackupState.DATA_EXPORT)
             startActivity(intent)
+            activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
             true
         }
 
@@ -84,6 +89,7 @@ class SettingFragment: PreferenceFragmentCompat() {
             val intent = Intent(activity, DataExportActivity::class.java)
             intent.putExtra(DataBackupState.varName, DataBackupState.DATA_IMPORT)
             startActivityForResult(intent, DataBackupState.DATA_IMPORT)
+            activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
             true
         }
 
@@ -126,10 +132,17 @@ class SettingFragment: PreferenceFragmentCompat() {
         //     true
         // }
 
+        sendInquiryPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            startActivity(Intent(activity, InquiryActivity::class.java))
+            activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
+            true
+        }
+
         // "오픈소스 라이선스"
         opensourceLisensePreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             OssLicensesMenuActivity.setActivityTitle(getString(R.string.opensource_lisense))
             startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
+            activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
             true
         }
     }

@@ -27,6 +27,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 class DataExportActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDataExportBinding
@@ -51,6 +52,7 @@ class DataExportActivity : AppCompatActivity() {
 
         topAppBar.setNavigationOnClickListener {
             finish()
+            overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
         }
 
         // change each view text based on called state
@@ -78,7 +80,7 @@ class DataExportActivity : AppCompatActivity() {
                 binding.txtPwdInfo.text = getString(R.string.db_import_pwd)
                 binding.txtExportPwd.hint = getString(R.string.db_import_pwd_hint)
                 binding.btnExportData.text = getString(R.string.db_import_btn)
-                
+
                 binding.btnExportData.setOnClickListener(userDataImportListener)
             }
         }
@@ -223,7 +225,7 @@ class DataExportActivity : AppCompatActivity() {
     }
 
     private fun uploadDBtoStorage() {
-        val fileName = "$userEmail+${LocalDateTime.now()}"
+        val fileName = UUID.randomUUID()
 
         val stream = FileInputStream(File(recordDB.openHelper.writableDatabase.path))
         val fileReference = storage.reference.child("user_db_backups/$fileName")
@@ -265,6 +267,7 @@ class DataExportActivity : AppCompatActivity() {
                 binding.progressDataExport.visibility = View.GONE
                 Toast.makeText(this, "데이터 백업이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
+                overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
             }
             .addOnFailureListener {
                 binding.btnExportData.isClickable = true
@@ -301,6 +304,7 @@ class DataExportActivity : AppCompatActivity() {
 
                             setResult(RESULT_OK)
                             finish()
+                            overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                         }.addOnFailureListener {
                             binding.progressDataExport.visibility = View.GONE
                             Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -331,5 +335,10 @@ class DataExportActivity : AppCompatActivity() {
             hashtext = "0$hashtext"
         }
         return hashtext
+    }
+
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
     }
 }

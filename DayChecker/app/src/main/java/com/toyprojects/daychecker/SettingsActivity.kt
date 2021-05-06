@@ -26,7 +26,8 @@ class SettingsActivity : AppCompatActivity() {
         topAppBar.setTitle(R.string.settings)
 
         topAppBar.setNavigationOnClickListener {
-             finish()
+            finish()
+            overridePendingTransition(R.anim.no_transition, R.anim.slide_out_right)
         }
 
         loadNativeAd()

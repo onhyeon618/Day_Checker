@@ -40,7 +40,10 @@ class InquiryActivity : AppCompatActivity() {
 
         topAppBar.setNavigationOnClickListener {
             if (isEmailValid || inquiryContext.isNotEmpty()) { showEndMsg() }
-            else { finish() }
+            else {
+                finish()
+                overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+            }
         }
 
         // Set texts for inquiry-type spinner
@@ -146,6 +149,7 @@ class InquiryActivity : AppCompatActivity() {
                         binding.progressInquiry.visibility = View.GONE
                         Toast.makeText(this, "문의가 접수되었습니다. 감사합니다.", Toast.LENGTH_SHORT).show()
                         finish()
+                        overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                     }
                     .addOnFailureListener {
                         binding.progressInquiry.visibility = View.GONE
@@ -177,7 +181,10 @@ class InquiryActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         builder.setMessage("작성하신 내용이 삭제됩니다. 계속하시겠습니까?")
-                .setPositiveButton("삭제") { _, _ -> finish() }
+                .setPositiveButton("삭제") { _, _ ->
+                    finish()
+                    overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+                }
                 .setNegativeButton("취소", null)
                 .setCancelable(true)
 
@@ -186,6 +193,9 @@ class InquiryActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (isEmailValid || inquiryContext.isNotEmpty()) { showEndMsg() }
-        else { finish() }
+        else {
+            finish()
+            overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
+        }
     }
 }

@@ -18,6 +18,7 @@
 
         <activity
             android:name="com.toyprojects.daychecker.MainActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,35 +28,42 @@
 
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThNoActionBar" >
         </activity>
 
         <activity
             android:name=".EditorActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity android:name=".SettingsActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThNoActionBar" >
         </activity>
 
         <activity android:name=".InquiryActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity android:name=".DataExportActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThMainActionBar" />
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/ThMainActionBar" />
 
     </application>

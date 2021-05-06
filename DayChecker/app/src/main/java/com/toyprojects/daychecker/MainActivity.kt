@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
                     startActivityForResult(intent, 4321)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.no_transition)
                     true
                 }
                 else -> false
@@ -113,19 +114,21 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(EditorState.varName, EditorState.NEW_RECORD)
             intent.putExtra("selectedDate", selectedDate.toString())
             startActivityForResult(intent, EditorState.NEW_RECORD)
+            overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
         }
         binding.btnAddRecord.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
             intent.putExtra(EditorState.varName, EditorState.NEW_RECORD)
             intent.putExtra("selectedDate", selectedDate.toString())
             startActivityForResult(intent, EditorState.NEW_RECORD)
+            overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
         }
 
         // Local (Room) Database
         roomdb = Room.databaseBuilder(
-                applicationContext,
-                RecordDB::class.java, "dayCheckRecord"
-            )
+            applicationContext,
+            RecordDB::class.java, "dayCheckRecord"
+        )
             .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
             .build()
 
@@ -182,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 val dotView3 = container.dayBinding.dotView3
 
                 textView.text = day.date.dayOfMonth.toString()
-                
+
                 // Check if record exists for the day; set dotViews visibility accordingly
                 if (numOfRecords.containsKey(day.date)) {
                     when (numOfRecords[day.date]) {
@@ -275,7 +278,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // setup RecyclerView
-        binding.recordsRV.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        binding.recordsRV.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         rvAdapter.listData = loadData(LocalDate.now())
         binding.recordsRV.adapter = rvAdapter
@@ -337,6 +345,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("recordMemo", tempItem.memo)
 
         startActivityForResult(intent, EditorState.EDIT_RECORD)
+        overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
     }
 
     private fun deleteConfirmMsg(position: Int) {
@@ -371,9 +380,13 @@ class MainActivity : AppCompatActivity() {
                     // change array value to show dots accordingly
                     if (numOfRecords.containsKey(updatedDate)) {
                         numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] =
-                            numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)]!!.plus(1)
-                    }
-                    else {
+                            numOfRecords[LocalDate.parse(
+                                updated,
+                                DateTimeFormatter.ISO_DATE
+                            )]!!.plus(
+                                1
+                            )
+                    } else {
                         numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] = 1
                     }
 
@@ -388,7 +401,10 @@ class MainActivity : AppCompatActivity() {
                     binding.layoutNoRecord.isVisible = false
                 }
                 EditorState.EDIT_RECORD -> {
-                    val updatedDate = LocalDate.parse(data?.getStringExtra("updatedDate"), DateTimeFormatter.ISO_DATE)
+                    val updatedDate = LocalDate.parse(
+                        data?.getStringExtra("updatedDate"),
+                        DateTimeFormatter.ISO_DATE
+                    )
 
                     // update recyclerview
                     rvAdapter.listData = loadData(updatedDate)
