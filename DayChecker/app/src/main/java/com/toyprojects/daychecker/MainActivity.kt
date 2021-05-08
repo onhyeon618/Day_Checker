@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.core.view.get
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -189,15 +188,25 @@ class MainActivity : AppCompatActivity() {
                 // Check if record exists for the day; set dotViews visibility accordingly
                 if (numOfRecords.containsKey(day.date)) {
                     when (numOfRecords[day.date]) {
-                        1 -> dotView1.isVisible = true
+                        0 -> {
+                            dotView1.visibility = View.GONE
+                            dotView2.visibility = View.GONE
+                            dotView3.visibility = View.GONE
+                        }
+                        1 -> {
+                            dotView1.visibility = View.VISIBLE
+                            dotView2.visibility = View.GONE
+                            dotView3.visibility = View.GONE
+                        }
                         2 -> {
-                            dotView1.isVisible = true
-                            dotView2.isVisible = true
+                            dotView1.visibility = View.VISIBLE
+                            dotView2.visibility = View.VISIBLE
+                            dotView3.visibility = View.GONE
                         }
                         else -> {
-                            dotView1.isVisible = true
-                            dotView2.isVisible = true
-                            dotView3.isVisible = true
+                            dotView1.visibility = View.VISIBLE
+                            dotView2.visibility = View.VISIBLE
+                            dotView3.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -316,16 +325,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             // if record exist, show recyclerview and its records; else hide
-            if (numOfRecords.containsKey(date)) {
-                binding.layoutRecordExist.isVisible = true
-                binding.layoutNoRecord.isVisible = false
+            if (!numOfRecords.containsKey(date)) {
+                binding.layoutRecordExist.visibility = View.GONE
+                binding.layoutNoRecord.visibility = View.VISIBLE
+            }
+            else if (numOfRecords[date] == 0) {
+                binding.layoutRecordExist.visibility = View.GONE
+                binding.layoutNoRecord.visibility = View.VISIBLE
+            }
+            else {
+                binding.layoutRecordExist.visibility = View.VISIBLE
+                binding.layoutNoRecord.visibility = View.GONE
 
                 rvAdapter.listData = loadData(date)
                 binding.recordsRV.adapter?.notifyDataSetChanged()
-            }
-            else {
-                binding.layoutRecordExist.isVisible = false
-                binding.layoutNoRecord.isVisible = true
             }
         }
     }
@@ -358,9 +371,19 @@ class MainActivity : AppCompatActivity() {
                 runBlocking {
                     roomdb.recordDao().delete(tempItem)
                 }
-
+                // refresh recyclerview
                 rvAdapter.listData.removeAt(position)
                 rvAdapter.notifyDataSetChanged()
+
+                // refresh calendarview
+                numOfRecords[selectedDate!!] = numOfRecords[selectedDate]!!.minus(1)
+                binding.calendarView.notifyDateChanged(selectedDate!!)
+
+                // refresh fragment
+                if (numOfRecords[selectedDate] == 0) {
+                    binding.layoutNoRecord.visibility = View.VISIBLE
+                    binding.layoutRecordExist.visibility = View.GONE
+                }
             }
             .setNegativeButton("취소", null)
             .setCancelable(true)
@@ -379,15 +402,9 @@ class MainActivity : AppCompatActivity() {
 
                     // change array value to show dots accordingly
                     if (numOfRecords.containsKey(updatedDate)) {
-                        numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] =
-                            numOfRecords[LocalDate.parse(
-                                updated,
-                                DateTimeFormatter.ISO_DATE
-                            )]!!.plus(
-                                1
-                            )
+                        numOfRecords[updatedDate] = numOfRecords[updatedDate]!!.plus(1)
                     } else {
-                        numOfRecords[LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)] = 1
+                        numOfRecords[updatedDate] = 1
                     }
 
                     binding.calendarView.notifyDateChanged(updatedDate)
@@ -397,18 +414,37 @@ class MainActivity : AppCompatActivity() {
                     binding.recordsRV.adapter?.notifyDataSetChanged()
 
                     // set visibility of each layout
-                    binding.layoutRecordExist.isVisible = true
-                    binding.layoutNoRecord.isVisible = false
+                    binding.layoutRecordExist.visibility = View.VISIBLE
+                    binding.layoutNoRecord.visibility = View.GONE
                 }
                 EditorState.EDIT_RECORD -> {
-                    val updatedDate = LocalDate.parse(
-                        data?.getStringExtra("updatedDate"),
-                        DateTimeFormatter.ISO_DATE
-                    )
+                    val updated = data?.getStringExtra("updatedDate")
+                    val updatedDate = LocalDate.parse(updated, DateTimeFormatter.ISO_DATE)
 
-                    // update recyclerview
-                    rvAdapter.listData = loadData(updatedDate)
-                    binding.recordsRV.adapter?.notifyDataSetChanged()
+                    // check if date changed
+                    if (updatedDate != selectedDate) {
+                        // minus one record from selectedDate
+                        numOfRecords[selectedDate!!] = numOfRecords[selectedDate]!!.minus(1)
+                        binding.calendarView.notifyDateChanged(selectedDate!!)
+
+                        // refresh fragment
+                        if (numOfRecords[selectedDate] == 0) {
+                            binding.layoutNoRecord.visibility = View.VISIBLE
+                            binding.layoutRecordExist.visibility = View.GONE
+                        }
+
+                        // add one record to updatedDate
+                        if (numOfRecords.containsKey(updatedDate)) {
+                            numOfRecords[updatedDate] = numOfRecords[updatedDate]!!.plus(1)
+                        } else {
+                            numOfRecords[updatedDate] = 1
+                        }
+                        binding.calendarView.notifyDateChanged(updatedDate)
+                    }
+                    val oldDate = selectedDate
+                    selectedDate = null
+                    selectDate(oldDate!!)
+
                 }
                 4321 -> {
                     val changed = data?.getIntExtra("dataReset", 0)
@@ -416,8 +452,8 @@ class MainActivity : AppCompatActivity() {
                         numOfRecords.clear()
                         binding.calendarView.notifyCalendarChanged()
 
-                        binding.layoutRecordExist.isVisible = false
-                        binding.layoutNoRecord.isVisible = true
+                        binding.layoutRecordExist.visibility = View.GONE
+                        binding.layoutNoRecord.visibility = View.VISIBLE
 
                         rvAdapter.listData.clear()
                         binding.recordsRV.adapter?.notifyDataSetChanged()

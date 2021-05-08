@@ -46,6 +46,8 @@ class EditorActivity : AppCompatActivity() {
             recordDate = LocalDate.parse(intent.getStringExtra("recordDate")!!, DateTimeFormatter.ISO_DATE)
 
             binding.dtvTimePicker.setDTText(intent.getStringExtra("recordTime")!!)
+            recordTime = intent.getStringExtra("recordTime")!!
+
             binding.txtRecordMemo.setText(intent.getStringExtra("recordMemo"))
 
             binding.ratingBar.rating = intent.getFloatExtra("recordRating", 0.0F)
@@ -181,10 +183,7 @@ class EditorActivity : AppCompatActivity() {
 
     private fun isChanged() : Boolean {
         return if (intent.getIntExtra(EditorState.varName, 0) == EditorState.NEW_RECORD) {
-            (binding.rgCondition.checkedRadioButtonId != binding.rbCondition1.id
-                    || binding.rgState.checkedRadioButtonId != binding.rbState1.id
-                    || binding.ratingBar.rating != 0.0F
-                    || binding.txtRecordMemo.text.toString().trim() != "")
+            (binding.ratingBar.rating != 0.0F || binding.txtRecordMemo.text.toString().trim() != "")
         } else {
             (binding.dtvDatePicker.getDTText() != intent.getStringExtra("recordDate")
                     || binding.dtvTimePicker.getDTText() != intent.getStringExtra("recordTime")
