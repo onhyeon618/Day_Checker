@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.toyprojects.daychecker"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0.0"
@@ -27,7 +27,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -55,6 +56,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.android.material:material:1.3.0'
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'

@@ -1,3 +1,5 @@
+package com.toyprojects.daychecker
+
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -12,9 +14,6 @@ import androidx.room.RoomDatabase
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.toyprojects.daychecker.*
-import com.toyprojects.daychecker.R
-import com.toyprojects.daychecker.DataExportActivity
 import com.toyprojects.daychecker.database.RecordDB
 import kotlinx.coroutines.runBlocking
 
@@ -142,7 +141,6 @@ class SettingFragment: PreferenceFragmentCompat() {
             true
         }
     }
-
 
     // 최종 테스트 후 적용 여부 결정 예정
     private fun checkForUpdate() {
