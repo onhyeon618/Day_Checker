@@ -1,13 +1,15 @@
 package com.toyprojects.daychecker
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.toyprojects.daychecker.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLoginBinding
     private var calledState = 0
 
@@ -68,8 +70,8 @@ class LoginActivity : AppCompatActivity() {
         if (enterin != -1) {
             inputPwd.append(enterin.toString())
             inputLength += 1
-            barArray.get(inputLength - 1).visibility = View.INVISIBLE   // hide bar-image
-            heartArray.get(inputLength - 1).visibility = View.VISIBLE   // show heart-image
+            barArray[inputLength - 1].visibility = View.INVISIBLE   // hide bar-image
+            heartArray[inputLength - 1].visibility = View.VISIBLE   // show heart-image
 
             // when input length reached four
             if (inputLength == 4) {
@@ -81,16 +83,13 @@ class LoginActivity : AppCompatActivity() {
             if (inputLength > 0) {
                 inputLength -= 1
                 inputPwd.deleteCharAt(inputLength)
-                barArray.get(inputLength).visibility = View.VISIBLE
-                heartArray.get(inputLength).visibility = View.INVISIBLE
+                barArray[inputLength].visibility = View.VISIBLE
+                heartArray[inputLength].visibility = View.INVISIBLE
             }
         }
     }
 
     private fun handleInputByState(state: Int) {
-        // 일단 마지막 하트까지는 다 보여준 뒤에 다음 내용을 진행하고 싶은데...
-        // finish() 할 때는 되는데 clearInput() 할 때만 마지막 하트가 안 보인다. 확인 필요.
-
         when(state) {
             // 1. Enable password(set new one): Request input again, compare, if same allow pwd usage
             AppLockState.ENABLE_PWD -> {
@@ -190,8 +189,10 @@ class LoginActivity : AppCompatActivity() {
         val barArray = arrayListOf(binding.passwordBar1, binding.passwordBar2, binding.passwordBar3, binding.passwordBar4)
         val heartArray = arrayListOf(binding.heartIcon1, binding.heartIcon2, binding.heartIcon3, binding.heartIcon4)
 
-        for (bar in barArray) { bar.visibility = View.VISIBLE }
-        for (heart in heartArray) { heart.visibility = View.INVISIBLE }
+        Handler(Looper.getMainLooper()).postDelayed({
+            for (bar in barArray) { bar.visibility = View.VISIBLE }
+            for (heart in heartArray) { heart.visibility = View.INVISIBLE }
+        }, 100)
 
         inputPwd.clear()
         inputLength = 0

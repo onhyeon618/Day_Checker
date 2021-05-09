@@ -1,20 +1,33 @@
 <resources>
-    <string name="app_name">DayChecker</string>
+    <string name="app_name">데이체커</string>
     <string name="view_datetime">Date Time Text</string>
 
     <string name="settings">설정</string>
     <string name="records">기록하기</string>
     <string name="save_record">저장</string>
     <string name="inquiries">문의하기</string>
+
+    <string name="security_category">보안</string>
+    <string name="use_password">비밀번호 사용</string>
+    <string name="change_password">비밀번호 변경</string>
+
+    <string name="data_category">데이터</string>
     <string name="data_export">데이터 백업</string>
     <string name="data_import">데이터 복원</string>
-    <string name="opensource_lisense">오픈소스 라이선스</string>
+    <string name="data_reset">데이터 초기화</string>
+
+    <string name="application_category">어플리케이션</string>
+    <string name="application_version">어플리케이션 버전</string>
+    <string name="opensource_license">오픈소스 라이선스</string>
 
     <string name="pwd_insert_current">비밀번호를 입력하세요.</string>
     <string name="pwd_new_input">사용할 비밀번호를 입력하세요.</string>
     <string name="pwd_input_again">다시 한 번 입력하세요.</string>
-    <string name="pwd_change">새 비밀번호를 입력하세요.</string>
     <string name="pwd_wrong_input">잘못된 입력입니다. 다시 시도하세요.</string>
+
+    <string name="pwd_is_enabled">비밀번호가 설정되었습니다.</string>
+    <string name="pwd_is_disabled">비밀번호가 해제되었습니다.</string>
+    <string name="pwd_is_changed">비밀번호가 변경되었습니다.</string>
 
     <string name="no_record1">아직 기록이 없어요!</string>
     <string name="no_record2">새 기록을 만드시겠어요?</string>
@@ -32,6 +45,10 @@
     <string name="record_state_third">묽은 거</string>
 
     <string name="inquiry_spinner">- 선택하세요 -</string>
+    <string name="inquiry_type1">어플 이용 문의</string>
+    <string name="inquiry_type2">오류 관련 문의</string>
+    <string name="inquiry_type3">데이터 삭제/백업 문의</string>
+    <string name="inquiry_type4">기타 문의</string>
     <string name="inquiry_email">회신 받으실 이메일</string>
     <string name="inquiry_context">문의 내용</string>
     <string name="inquiry_agreement">회신을 위한 이메일 정보 수집에 동의합니다.</string>
@@ -39,6 +56,12 @@
 
     <string name="edit_record">수정</string>
     <string name="delete_record">삭제</string>
+    <string name="cancel_text">취소</string>
+    <string name="go_reset">초기화</string>
+
+    <string name="cancel_writing_confirm">변경사항이 있습니다. 변경사항을 삭제하시겠습니까?</string>
+    <string name="delete_record_confirm">기록을 삭제하시겠습니까? 삭제한 기록은 되돌릴 수 없습니다.</string>
+    <string name="cancel_inquiry_confirm">작성하신 내용이 삭제됩니다. 계속하시겠습니까?</string>
 
     <string name="db_export_main">데이터를 백업하시겠습니까?</string>
     <string name="db_export_alert">
@@ -58,6 +81,34 @@
     <string name="db_import_pwd">비밀번호</string>
     <string name="db_import_pwd_hint">8~15자 이내</string>
     <string name="db_import_btn">데이터 복원하기</string>
+
+    <string name="db_reset_main">기기에 저장된 모든 기록을 삭제하시겠습니까? 백업하지 않은 기록은 모두 지워지며, 다시 복구할 수 없습니다.</string>
+
+    <string name="inquiry_complete">문의가 접수되었습니다. 감사합니다.</string>
+    <string name="db_export_complete">데이터 백업이 완료되었습니다.</string>
+    <string name="db_import_complete">데이터 복원이 완료되었습니다!</string>
+    <string name="db_reset_complete">모든 기록이 삭제되었습니다.</string>
+
+    <string name="wrong_pwd">잘못된 비밀번호입니다.</string>
+    <string name="no_backup_file">해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.</string>
+
+    <string name="select_inquiry_type">문의 유형을 선택하세요.</string>
+    <string name="no_inquiry_input">문의 내용을 작성하세요.</string>
+    <string name="no_email_input">이메일 주소를 작성하세요.</string>
+    <string name="wrong_email_format">이메일 형식이 잘못되었습니다.</string>
+    <string name="no_pwd_input">비밀번호를 작성하세요.</string>
+    <string name="wrong_pwd_format">8~15자 이내로 입력하세요.</string>
+    <string name="wrong_pwd_format2">비밀번호는 8~15자 이내로 입력하세요.</string>
+    <string name="check_internet">인터넷 연결을 먼저 확인해주세요.</string>
+    <string name="agree_to_terms">정보 수집 동의가 필요합니다.</string>
+
+    <string name="inquiry_error">문의 접수에 실패했습니다. 인터넷 연결을 확인하시고 잠시 후 다시 시도해주세요.</string>
+    <string name="error_occurred">오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.</string>
+
+    <string name="new_version_available">새 버전이 출시되었습니다.</string>
+    <string name="is_newest_version">최신 버전입니다.</string>
+
+    <string name="backpress_close">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name="sample_admob_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="sample_unit_id">ca-app-pub-3940256099942544/2247696110</string>

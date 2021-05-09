@@ -47,14 +47,14 @@ class InquiryActivity : AppCompatActivity() {
         }
 
         // Set texts for inquiry-type spinner
-        val typeList = listOf("어플 이용 문의", "오류 관련 문의", "데이터 삭제/백업 문의", "기타 문의")
+        val typeList = listOf(getString(R.string.inquiry_type1), getString(R.string.inquiry_type2), getString(R.string.inquiry_type3), getString(R.string.inquiry_type4))
         val spnAdapter = ArrayAdapter<String>(this, R.layout.dropdown_item, typeList)
         binding.spnInquiryType.setAdapter(spnAdapter)
 
         // check is type selected & which type selected
         binding.spnInquiryType.setOnItemClickListener { _, _, position, _ ->
             isTypeSelected = true
-            inquiryType = typeList.get(position)
+            inquiryType = typeList[position]
         }
 
         // check email input validation
@@ -72,7 +72,7 @@ class InquiryActivity : AppCompatActivity() {
                         isEmailValid = true
                     } else {
                         isEmailValid = false
-                        binding.inputLayoutInquiryEmail.error = "이메일 형식이 잘못되었습니다."
+                        binding.inputLayoutInquiryEmail.error = getString(R.string.wrong_email_format)
                     }
                 }
             }
@@ -104,31 +104,31 @@ class InquiryActivity : AppCompatActivity() {
 
         // check internet connection first
         if (!isInternetConnected(this)) {
-            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         }
         // check each input
         else if (!isTypeSelected) {
             binding.spnInquiryType.requestFocus()
-            Toast.makeText(this, "문의 유형을 선택하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.select_inquiry_type), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         } else if (userEmail.isEmpty()) {
             binding.inputLayoutInquiryEmail.requestFocus()
-            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_email_input), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         } else if (!isEmailValid) {
             binding.inputLayoutInquiryEmail.requestFocus()
-            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.wrong_email_format), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         } else if (inquiryContext.isEmpty()) {
             binding.inputLayoutInquiryContext.requestFocus()
-            Toast.makeText(this, "문의 내용을 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_inquiry_input), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         }
         // check is checkbox chekced
         else if (!binding.checkAgreement.isChecked) {
             binding.checkAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
-            Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.agree_to_terms), Toast.LENGTH_SHORT).show()
             binding.btnSendInquiry.isClickable = true
         }
         // if all valid, send data to Firebase
@@ -147,13 +147,13 @@ class InquiryActivity : AppCompatActivity() {
                     .add(finalInquiry)
                     .addOnSuccessListener {
                         binding.progressInquiry.visibility = View.GONE
-                        Toast.makeText(this, "문의가 접수되었습니다. 감사합니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.inquiry_complete), Toast.LENGTH_SHORT).show()
                         finish()
                         overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                     }
                     .addOnFailureListener {
                         binding.progressInquiry.visibility = View.GONE
-                        Toast.makeText(this, "문의 접수에 실패했습니다. 인터넷 연결을 확인하시고 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.inquiry_error), Toast.LENGTH_SHORT).show()
                     }
         }
     }
@@ -180,12 +180,12 @@ class InquiryActivity : AppCompatActivity() {
     private fun showEndMsg() {
         val builder = AlertDialog.Builder(this)
 
-        builder.setMessage("작성하신 내용이 삭제됩니다. 계속하시겠습니까?")
-                .setPositiveButton("삭제") { _, _ ->
+        builder.setMessage(getString(R.string.cancel_inquiry_confirm))
+                .setPositiveButton(getString(R.string.delete_record)) { _, _ ->
                     finish()
                     overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                 }
-                .setNegativeButton("취소", null)
+                .setNegativeButton(getString(R.string.cancel_text), null)
                 .setCancelable(true)
 
         builder.create().show()

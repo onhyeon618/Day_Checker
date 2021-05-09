@@ -33,9 +33,7 @@ class EditorActivity : AppCompatActivity() {
         recordDB = Room.databaseBuilder(
             this,
             RecordDB::class.java, "dayCheckRecord"
-            )
-            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-            .build()
+        ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
 
         // Check where is the page called from:
         // if page opened for editing existing record, set its data on corresponding place
@@ -150,9 +148,9 @@ class EditorActivity : AppCompatActivity() {
             val day = recordDate.dayOfMonth
 
             val datePicker = DatePickerDialog(this,
-                { _, year, month, dayOfMonth ->
-                    binding.dtvDatePicker.setDTText(String.format("%d-%02d-%02d", year, month+1, dayOfMonth))
-                    recordDate = LocalDate.parse(String.format("%d-%02d-%02d", year, month+1, dayOfMonth), DateTimeFormatter.ISO_DATE)
+                { _, dpyear, dpmonth, dayOfMonth ->
+                    binding.dtvDatePicker.setDTText(String.format("%d-%02d-%02d", dpyear, dpmonth+1, dayOfMonth))
+                    recordDate = LocalDate.parse(String.format("%d-%02d-%02d", dpyear, dpmonth+1, dayOfMonth), DateTimeFormatter.ISO_DATE)
                 }, year, month-1, day)
 
             datePicker.show()
@@ -164,8 +162,8 @@ class EditorActivity : AppCompatActivity() {
             val minute = recordTime.split(" : ")[1].toInt()
 
             val mTimePicker = TimePickerDialog(this,
-                { _, hourOfDay, minute ->
-                    recordTime = String.format("%02d : %02d", hourOfDay, minute)
+                { _, hourOfDay, dpminute ->
+                    recordTime = String.format("%02d : %02d", hourOfDay, dpminute)
                     binding.dtvTimePicker.setDTText(recordTime)
                 }, hour, minute, false)
 
@@ -196,12 +194,12 @@ class EditorActivity : AppCompatActivity() {
     private fun showEndMsg() {
         val builder = AlertDialog.Builder(this)
 
-        builder.setMessage("변경사항이 있습니다. 변경사항을 삭제하시겠습니까?")
-            .setPositiveButton("삭제") { _, _ ->
+        builder.setMessage(getString(R.string.cancel_writing_confirm))
+            .setPositiveButton(getString(R.string.delete_record)) { _, _ ->
                 finish()
                 overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
             }
-            .setNegativeButton("취소", null)
+            .setNegativeButton(getString(R.string.cancel_text), null)
             .setCancelable(true)
 
         builder.create().show()

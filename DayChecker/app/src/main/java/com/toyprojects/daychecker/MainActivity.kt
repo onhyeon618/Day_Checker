@@ -129,13 +129,10 @@ class MainActivity : AppCompatActivity() {
         roomdb = Room.databaseBuilder(
             applicationContext,
             RecordDB::class.java, "dayCheckRecord"
-        )
-            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-            .build()
+        ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
 
         runBlocking {
             // Read entire database to get <date - num of records> pair
-            // 그 달 것만 먼저 가져오도록 하는 편이 효율적이려나... 고민 필요.
             val itemCounts = roomdb.recordDao().countRecordPerDay()
 
             // set each pair as map for later use
@@ -232,14 +229,14 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     // if dates are not on this month
                     textView.setTextColor(Color.BLACK)
+                    textView.background = null
                     textView.alpha = 0.3f
                     dotsLayout.alpha = 0.3f
-                    textView.background = null
                 }
             }
         }
 
-        // When scrolled
+        // When scrolled (or scroll detected)
         binding.calendarView.monthScrollListener = {
             binding.currentMonthText.text = titleFormatter.format(it.yearMonth)
 
@@ -297,7 +294,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        rvAdapter.listData = loadData(LocalDate.now())
+        rvAdapter.listData = loadData(today)
         binding.recordsRV.adapter = rvAdapter
 
         binding.recordsRV.layoutManager = LinearLayoutManager(this)
@@ -323,7 +320,7 @@ class MainActivity : AppCompatActivity() {
             selectedDate = date
 
             binding.calendarView.notifyDateChanged(date)
-            oldDate?.let {
+            if (oldDate != null) {
                 binding.calendarView.notifyDateChanged(oldDate)
             }
 
@@ -347,33 +344,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openEditor(position: Int) {
-        val tempItem = rvAdapter.listData[position]
+        val clickedItem = rvAdapter.listData[position]
         val intent = Intent(applicationContext, EditorActivity::class.java)
 
         intent.putExtra(EditorState.varName, EditorState.EDIT_RECORD)
 
-        intent.putExtra("recordID", tempItem.id)
-        intent.putExtra("recordDate", tempItem.record_date.toString())
-        intent.putExtra("recordTime", tempItem.record_time)
-        intent.putExtra("recordCondition", tempItem.condition)
-        intent.putExtra("recordState", tempItem.state)
-        intent.putExtra("recordRating", tempItem.rating)
-        intent.putExtra("recordMemo", tempItem.memo)
+        intent.putExtra("recordID", clickedItem.id)
+        intent.putExtra("recordDate", clickedItem.record_date.toString())
+        intent.putExtra("recordTime", clickedItem.record_time)
+        intent.putExtra("recordCondition", clickedItem.condition)
+        intent.putExtra("recordState", clickedItem.state)
+        intent.putExtra("recordRating", clickedItem.rating)
+        intent.putExtra("recordMemo", clickedItem.memo)
 
         startActivityForResult(intent, EditorState.EDIT_RECORD)
         overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
     }
 
     private fun deleteConfirmMsg(position: Int) {
-
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("기록을 삭제하시겠습니까? 삭제한 기록은 되돌릴 수 없습니다.")
-            .setPositiveButton("삭제") { _, _ ->
-                val tempItem = rvAdapter.listData[position]
+        builder.setMessage(getString(R.string.delete_record_confirm))
+            .setPositiveButton(getString(R.string.delete_record)) { _, _ ->
+                val clickedItem = rvAdapter.listData[position]
 
                 runBlocking {
-                    roomdb.recordDao().delete(tempItem)
+                    roomdb.recordDao().delete(clickedItem)
                 }
+
                 // refresh recyclerview
                 rvAdapter.listData.removeAt(position)
                 rvAdapter.notifyDataSetChanged()
@@ -388,7 +385,7 @@ class MainActivity : AppCompatActivity() {
                     binding.layoutRecordExist.visibility = View.GONE
                 }
             }
-            .setNegativeButton("취소", null)
+            .setNegativeButton(getString(R.string.cancel_text), null)
             .setCancelable(true)
 
         builder.create().show()
@@ -447,22 +444,18 @@ class MainActivity : AppCompatActivity() {
                     val oldDate = selectedDate
                     selectedDate = null
                     selectDate(oldDate!!)
-
                 }
                 4321 -> {
-                    val changed = data?.getIntExtra("dataReset", 0)
-                    if (changed == 4002) {
+                    val isDataReset = data?.getIntExtra("dataReset", 0)
+                    if (isDataReset == DataBackupState.DATA_RESET) {
                         numOfRecords.clear()
                         binding.calendarView.notifyCalendarChanged()
 
                         binding.layoutRecordExist.visibility = View.GONE
                         binding.layoutNoRecord.visibility = View.VISIBLE
-
-                        rvAdapter.listData.clear()
-                        binding.recordsRV.adapter?.notifyDataSetChanged()
                     }
-                    val imported = data?.getIntExtra("dataImport", 0)
-                    if (imported == DataBackupState.DATA_IMPORT) {
+                    val isDataImported = data?.getIntExtra("dataImport", 0)
+                    if (isDataImported == DataBackupState.DATA_IMPORT) {
                         // re-build database
                         roomdb = Room.databaseBuilder(
                             applicationContext,
@@ -479,7 +472,7 @@ class MainActivity : AppCompatActivity() {
 
                         binding.calendarView.notifyCalendarChanged()
                         selectedDate = null   // must set it to call selectDate properly
-                        selectDate(LocalDate.now())
+                        selectDate(today)
                     }
                 }
             }
@@ -494,7 +487,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         this.doubleBackPressed = true
-        closeToast = Toast.makeText(this, "\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+        closeToast = Toast.makeText(this, getString(R.string.backpress_close), Toast.LENGTH_SHORT)
         closeToast.show()
         Handler(Looper.getMainLooper()).postDelayed({ doubleBackPressed = false }, 2000)
     }

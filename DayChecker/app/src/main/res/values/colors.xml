@@ -2,7 +2,6 @@
 <resources>
     <color name="colorPrimary">#9570fa</color>
     <color name="colorPrimaryDark">#c3aeff</color>
-    <color name="colorAccent">#fdaee5</color>
 
     <color name="mainTheme">#9570fa</color>
     <color name="statusBar">#c3aeff</color>
@@ -13,7 +12,6 @@
     <color name="white">#FFFFFF</color>
     <color name="whitegray">#F6F6F6</color>
     <color name="lightgray">#CACACA</color>
-    <color name="gray">#707070</color>
 
     <color name="Rred">#FF3030</color>
     <color name="Rpink">#FFBBDB</color>

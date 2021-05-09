@@ -10,7 +10,7 @@ private const val TABLE_NAME = "dayCheckRecord"
 
 @Entity(
     tableName = TABLE_NAME,
-    indices = arrayOf(Index(value = ["record_date"]))
+    indices = [Index(value = ["record_date"]), Index(value = ["record_time"])]
 )
 data class Record(
     @PrimaryKey(autoGenerate = true) var id : Int,

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -24,7 +23,6 @@ import java.io.FileInputStream
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -62,7 +60,7 @@ class DataExportActivity : AppCompatActivity() {
 
                 binding.txtTitle.text = getString(R.string.db_export_main)
                 binding.txtDataInformations.text = getString(R.string.db_export_alert)
-                binding.checkDataAgreement.isVisible = true
+                binding.checkDataAgreement.visibility = View.VISIBLE
                 binding.txtEmailInfo.text = getString(R.string.db_export_email)
                 binding.txtPwdInfo.text = getString(R.string.db_export_pwd)
                 binding.txtExportPwd.hint = getString(R.string.db_export_pwd_hint)
@@ -75,7 +73,7 @@ class DataExportActivity : AppCompatActivity() {
 
                 binding.txtTitle.text = getString(R.string.db_import_main)
                 binding.txtDataInformations.text = getString(R.string.db_import_alert)
-                binding.checkDataAgreement.isVisible = false
+                binding.checkDataAgreement.visibility = View.GONE
                 binding.txtEmailInfo.text = getString(R.string.db_import_email)
                 binding.txtPwdInfo.text = getString(R.string.db_import_pwd)
                 binding.txtExportPwd.hint = getString(R.string.db_import_pwd_hint)
@@ -103,7 +101,7 @@ class DataExportActivity : AppCompatActivity() {
                         isEmailValid = true
                     } else {
                         isEmailValid = false
-                        binding.inputLayoutExportEmail.error = "이메일 형식이 잘못되었습니다."
+                        binding.inputLayoutExportEmail.error = getString(R.string.wrong_email_format)
                     }
                 }
             }
@@ -120,7 +118,7 @@ class DataExportActivity : AppCompatActivity() {
                         isPwdValid = true
                     } else {
                         isPwdValid = false
-                        binding.inputLayoutExportPwd.error = "8~15자 이내로 입력하세요."
+                        binding.inputLayoutExportPwd.error = getString(R.string.wrong_pwd_format)
                     }
                 }
             }
@@ -151,27 +149,27 @@ class DataExportActivity : AppCompatActivity() {
 
         // check input validations
         if (!isInternetConnected(this)) {
-            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (!binding.checkDataAgreement.isChecked) {
             binding.checkDataAgreement.setBackgroundColor(Color.parseColor("#FFA7A7"))
-            Toast.makeText(this, "정보 수집 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.agree_to_terms), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (userEmail.isEmpty()) {
             binding.inputLayoutExportEmail.requestFocus()
-            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_email_input), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (!isEmailValid) {
             binding.inputLayoutExportEmail.requestFocus()
-            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.wrong_email_format), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (userPwd.isEmpty()) {
             binding.inputLayoutExportPwd.requestFocus()
-            Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_pwd_input), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (!isPwdValid) {
             binding.inputLayoutExportPwd.requestFocus()
-            Toast.makeText(this, "비밀번호는 8~15자 이내로 입력하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.wrong_pwd_format2), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else {
             binding.progressDataExport.visibility = View.VISIBLE
@@ -194,19 +192,19 @@ class DataExportActivity : AppCompatActivity() {
 
         // check input validations
         if (!isInternetConnected(this)) {
-            Toast.makeText(this, "인터넷 연결을 먼저 확인해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (userEmail.isEmpty()) {
             binding.inputLayoutExportEmail.requestFocus()
-            Toast.makeText(this, "이메일 주소를 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_email_input), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (!isEmailValid) {
             binding.inputLayoutExportEmail.requestFocus()
-            Toast.makeText(this, "잘못된 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.wrong_email_format), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else if (userPwd.isEmpty()) {
             binding.inputLayoutExportPwd.requestFocus()
-            Toast.makeText(this, "비밀번호를 작성하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_pwd_input), Toast.LENGTH_SHORT).show()
             binding.btnExportData.isClickable = true
         } else {
             binding.progressDataExport.visibility = View.VISIBLE
@@ -246,7 +244,7 @@ class DataExportActivity : AppCompatActivity() {
             } else {
                 binding.btnExportData.isClickable = true
                 binding.progressDataExport.visibility = View.GONE
-                Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_occurred), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -265,14 +263,14 @@ class DataExportActivity : AppCompatActivity() {
             .set(exportItem)
             .addOnSuccessListener {
                 binding.progressDataExport.visibility = View.GONE
-                Toast.makeText(this, "데이터 백업이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.db_export_complete), Toast.LENGTH_SHORT).show()
                 finish()
                 overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
             }
             .addOnFailureListener {
                 binding.btnExportData.isClickable = true
                 binding.progressDataExport.visibility = View.GONE
-                Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_occurred), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -283,11 +281,11 @@ class DataExportActivity : AppCompatActivity() {
                 if (document.exists()) {
                     if (document.data?.get("userPwd").toString() != getEncrypt(userPwd)) {
                         binding.progressDataExport.visibility = View.GONE
-                        Toast.makeText(this, "잘못된 비밀번호입니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.wrong_pwd), Toast.LENGTH_SHORT).show()
                         binding.btnExportData.isClickable = true
                     } else if (ChronoUnit.DAYS.between(LocalDate.parse(document.data?.get("backupDate").toString(), DateTimeFormatter.ISO_DATE), LocalDate.now()) > 7) {
                         binding.progressDataExport.visibility = View.GONE
-                        Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.no_backup_file), Toast.LENGTH_SHORT).show()
                         binding.btnExportData.isClickable = true
                     } else {
                         val fileReference = storage.getReferenceFromUrl(document.data?.get("storagePath").toString())
@@ -300,26 +298,26 @@ class DataExportActivity : AppCompatActivity() {
                             localFile.delete()
 
                             binding.progressDataExport.visibility = View.GONE
-                            Toast.makeText(this, "복원이 완료되었습니다!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, getString(R.string.db_import_complete), Toast.LENGTH_SHORT).show()
 
                             setResult(RESULT_OK)
                             finish()
                             overridePendingTransition(R.anim.no_transition, R.anim.slide_down)
                         }.addOnFailureListener {
                             binding.progressDataExport.visibility = View.GONE
-                            Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, getString(R.string.error_occurred), Toast.LENGTH_SHORT).show()
                             binding.btnExportData.isClickable = true
                         }
                     }
                 } else {
                     binding.progressDataExport.visibility = View.GONE
-                    Toast.makeText(this, "해당 이메일로 백업된 파일이 없거나 유효한 기간이 지났습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.no_backup_file), Toast.LENGTH_SHORT).show()
                     binding.btnExportData.isClickable = true
                 }
             }
             .addOnFailureListener { exception ->
                 binding.progressDataExport.visibility = View.GONE
-                Toast.makeText(this, "오류가 발생했습니다. 인터넷 연결 확인 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_occurred), Toast.LENGTH_SHORT).show()
                 binding.btnExportData.isClickable = true
             }
     }

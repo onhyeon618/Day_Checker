@@ -1,8 +1,8 @@
 package com.toyprojects.daychecker
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.google.android.ads.nativetemplates.NativeTemplateStyle
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
@@ -44,7 +44,7 @@ class SettingsActivity : AppCompatActivity() {
             }
             .withAdListener(object: AdListener() {
                 override fun onAdFailedToLoad(p0: LoadAdError) {
-                    binding.nativeAdTemplate.isVisible = false
+                    binding.nativeAdTemplate.visibility = View.GONE
                     super.onAdFailedToLoad(p0)
                 }
             })

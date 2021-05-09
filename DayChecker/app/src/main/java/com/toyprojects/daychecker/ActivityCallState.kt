@@ -18,4 +18,5 @@ object DataBackupState {
     const val varName = "dataBackupState"
     val DATA_EXPORT = 3001
     val DATA_IMPORT = 3002
+    val DATA_RESET = 3003
 }

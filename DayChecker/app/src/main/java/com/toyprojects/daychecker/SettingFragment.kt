@@ -19,8 +19,6 @@ import com.toyprojects.daychecker.database.RecordDB
 import kotlinx.coroutines.runBlocking
 
 class SettingFragment: PreferenceFragmentCompat() {
-    private var beforeChange = false
-
     private val currentVersion = BuildConfig.VERSION_NAME
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -36,11 +34,10 @@ class SettingFragment: PreferenceFragmentCompat() {
 
         val appVersionPreference: Preference? = findPreference("app_version")
         val sendInquiryPreference: Preference? = findPreference("send_inquiry")
-        val opensourceLisensePreference: Preference? = findPreference("opensource_license")
+        val opensourceLicensePreference: Preference? = findPreference("opensource_license")
 
         // save current state for later use
         if (pwdUsagePreference != null) {
-            beforeChange = pwdUsagePreference.isChecked
             pwdResetPreference?.isVisible = pwdUsagePreference.isChecked
         }
 
@@ -97,27 +94,25 @@ class SettingFragment: PreferenceFragmentCompat() {
         dataResetPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             val builder = AlertDialog.Builder(activity)
 
-            builder.setTitle("데이터 초기화")
-            builder.setMessage("기기에 저장된 모든 기록을 삭제하시겠습니까? 백업하지 않은 기록은 모두 지워지며, 다시 복구할 수 없습니다.")
-                .setPositiveButton("초기화") { _, _ ->
+            builder.setTitle(getString(R.string.data_reset))
+            builder.setMessage(getString(R.string.db_reset_main))
+                .setPositiveButton(getString(R.string.go_reset)) { _, _ ->
                     val roomdb = Room.databaseBuilder(
                         activity,
                         RecordDB::class.java, "dayCheckRecord"
-                        )
-                        .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-                        .build()
+                    ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
 
                     runBlocking {
                         roomdb.recordDao().deleteAll()
                     }
 
-                    Toast.makeText(activity, "모든 기록이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.db_reset_complete), Toast.LENGTH_SHORT).show()
 
                     val main = Intent()
-                    main.putExtra("dataReset", 4002)
+                    main.putExtra("dataReset", DataBackupState.DATA_RESET)
                     activity.setResult(RESULT_OK, main)
                 }
-                .setNegativeButton("취소", null)
+                .setNegativeButton(getString(R.string.cancel_text), null)
                 .setCancelable(true)
 
             builder.create().show()
@@ -132,6 +127,7 @@ class SettingFragment: PreferenceFragmentCompat() {
         //     true
         // }
 
+        // "문의 보내기"
         sendInquiryPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
             startActivity(Intent(activity, InquiryActivity::class.java))
             activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
@@ -139,8 +135,8 @@ class SettingFragment: PreferenceFragmentCompat() {
         }
 
         // "오픈소스 라이선스"
-        opensourceLisensePreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
-            OssLicensesMenuActivity.setActivityTitle(getString(R.string.opensource_lisense))
+        opensourceLicensePreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            OssLicensesMenuActivity.setActivityTitle(getString(R.string.opensource_license))
             startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
             activity.overridePendingTransition(R.anim.slide_up, R.anim.no_transition)
             true
@@ -160,7 +156,9 @@ class SettingFragment: PreferenceFragmentCompat() {
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                Toast.makeText(activity, "새 버전이 출시되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.new_version_available), Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, getString(R.string.is_newest_version), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -177,17 +175,15 @@ class SettingFragment: PreferenceFragmentCompat() {
                 AppLockState.ENABLE_PWD -> {
                     pwdUsagePreference?.isChecked = true
                     pwdResetPreference?.isVisible = true
-                    Toast.makeText(activity, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show()
-                    beforeChange = true   // need to be changed in case user enter LoginActivity again directly from current state
+                    Toast.makeText(activity, getString(R.string.pwd_is_enabled), Toast.LENGTH_SHORT).show()
                 }
                 AppLockState.REMOVE_PWD -> {
                     pwdUsagePreference?.isChecked = false
                     pwdResetPreference?.isVisible = false
-                    Toast.makeText(activity, "비밀번호가 해제되었습니다.", Toast.LENGTH_SHORT).show()
-                    beforeChange = false
+                    Toast.makeText(activity, getString(R.string.pwd_is_disabled), Toast.LENGTH_SHORT).show()
                 }
                 AppLockState.CHANGE_PWD -> {
-                    Toast.makeText(activity, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.pwd_is_changed), Toast.LENGTH_SHORT).show()
                 }
                 DataBackupState.DATA_IMPORT -> {
                     val main = Intent()
