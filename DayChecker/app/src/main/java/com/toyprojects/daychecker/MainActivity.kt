@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private val today = LocalDate.now()
     private val titleFormatter = DateTimeFormatter.ofPattern("yyyy년 MMM")
 
+    private var getToday = false
+
     private var numOfRecords = mutableMapOf<LocalDate, Int>()
 
     // set as global to enable canceling
@@ -144,8 +146,8 @@ class MainActivity : AppCompatActivity() {
 
         // set up calendar
         val currentMonth = YearMonth.now()
-        val firstMonth = currentMonth.minusMonths(10)
-        val lastMonth = currentMonth.plusMonths(10)
+        val firstMonth = currentMonth.minusMonths(60)
+        val lastMonth = currentMonth.plusMonths(12)
         val daysOfWeek = arrayOf("일", "월", "화", "수", "목", "금", "토") // for header
         binding.calendarView.setup(firstMonth, lastMonth, DayOfWeek.SUNDAY)
         binding.calendarView.scrollToMonth(currentMonth)
@@ -229,8 +231,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     // if dates are not on this month
+                    textView.setTextColor(Color.BLACK)
                     textView.alpha = 0.3f
                     dotsLayout.alpha = 0.3f
+                    textView.background = null
                 }
             }
         }
@@ -239,8 +243,14 @@ class MainActivity : AppCompatActivity() {
         binding.calendarView.monthScrollListener = {
             binding.currentMonthText.text = titleFormatter.format(it.yearMonth)
 
-            // select first day of month -> must set to arrange recyclerview
-            selectDate(it.yearMonth.atDay(1))
+            if (getToday) {
+                selectDate(today)
+                getToday = false
+            }
+            else {
+                // select first day of month -> must set to arrange recyclerview
+                selectDate(it.yearMonth.atDay(1))
+            }
         }
 
         // Calendar header(week legend) -> calendar_month_header_layout.xml
@@ -263,26 +273,19 @@ class MainActivity : AppCompatActivity() {
 
         // Go back to today's date when logo clicked
         binding.logo.setOnClickListener {
-            binding.calendarView.scrollToMonth(currentMonth)
-            // smoothScrollToMonth을 쓰면 아래의 selectDate()가 제대로 먹지 않는다. 확인 필요.
-            // binding.calendarView.smoothScrollToMonth(currentMonth)
-            binding.calendarView.post {
-                // Show today's events initially.
-                selectDate(today)
-            }
+            getToday = true
+            binding.calendarView.smoothScrollToMonth(currentMonth)
         }
 
         // prev/next month buttons
         binding.previousMonthImage.setOnClickListener{
             binding.calendarView.findFirstVisibleMonth()?.let {
                 binding.calendarView.smoothScrollToMonth(it.yearMonth.previous)
-                selectDate(it.yearMonth.atDay(1))
             }
         }
         binding.nextMonthImage.setOnClickListener{
             binding.calendarView.findFirstVisibleMonth()?.let {
                 binding.calendarView.smoothScrollToMonth(it.yearMonth.next)
-                selectDate(it.yearMonth.atDay(1))
             }
         }
 

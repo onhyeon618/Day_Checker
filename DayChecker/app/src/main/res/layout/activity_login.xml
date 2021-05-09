@@ -10,13 +10,13 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="어플리케이션 로고"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:srcCompat="@drawable/title_password"
-        android:contentDescription="어플리케이션 로고" />
+        app:layout_constraintVertical_bias="0.18"
+        app:srcCompat="@drawable/title_password" />
 
     <TextView
         android:id="@+id/textPwdInfo"
@@ -128,13 +128,13 @@
         android:id="@+id/btnNumpad0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="64dp"
         android:background="@android:color/transparent"
+        android:contentDescription="숫자패드0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/numpad_0"
-        android:contentDescription="숫자패드0" />
+        app:srcCompat="@drawable/numpad_0" />
 
     <ImageButton
         android:id="@+id/btnNumpadErase"
