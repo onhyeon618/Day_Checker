@@ -45,7 +45,7 @@ class DataExportActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val topAppBar = binding.toolbar
-        topAppBar.setNavigationIcon(R.drawable.back_button);
+        topAppBar.setNavigationIcon(R.drawable.back_button)
         topAppBar.setBackgroundColor(255)
 
         topAppBar.setNavigationOnClickListener {

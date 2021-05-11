@@ -19,7 +19,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/editor_appbar" />
+            app:menu="@menu/editor_appbar"
+            app:navigationContentDescription="@string/desc_back_button" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -114,7 +115,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_white" />
+                    android:background="@drawable/rb_condition_white"
+                    android:contentDescription="@string/desc_color_white"/>
 
                 <RadioButton
                     android:id="@+id/rbCondition2"
@@ -125,7 +127,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_black" />
+                    android:background="@drawable/rb_condition_black"
+                    android:contentDescription="@string/desc_color_black" />
 
                 <RadioButton
                     android:id="@+id/rbCondition3"
@@ -136,7 +139,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_red" />
+                    android:background="@drawable/rb_condition_red"
+                    android:contentDescription="@string/desc_color_red" />
 
                 <RadioButton
                     android:id="@+id/rbCondition4"
@@ -147,7 +151,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_pink" />
+                    android:background="@drawable/rb_condition_pink"
+                    android:contentDescription="@string/desc_color_pink" />
 
                 <RadioButton
                     android:id="@+id/rbCondition5"
@@ -158,7 +163,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_yellow" />
+                    android:background="@drawable/rb_condition_yellow"
+                    android:contentDescription="@string/desc_color_yellow" />
 
                 <RadioButton
                     android:id="@+id/rbCondition6"
@@ -169,7 +175,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_green" />
+                    android:background="@drawable/rb_condition_green"
+                    android:contentDescription="@string/desc_color_green" />
 
                 <RadioButton
                     android:id="@+id/rbCondition7"
@@ -180,7 +187,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_lightblue" />
+                    android:background="@drawable/rb_condition_lightblue"
+                    android:contentDescription="@string/desc_color_sky" />
 
                 <RadioButton
                     android:id="@+id/rbCondition8"
@@ -191,7 +199,8 @@
                     android:layout_margin="4dp"
                     android:elevation="2dp"
                     android:button="@android:color/transparent"
-                    android:background="@drawable/rb_condition_blue" />
+                    android:background="@drawable/rb_condition_blue"
+                    android:contentDescription="@string/desc_color_blue" />
             </RadioGroup>
 
             <TextView
@@ -221,7 +230,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textState"
-                app:layout_constraintDimensionRatio="8:1" >
+                app:layout_constraintDimensionRatio="7:1" >
 
                 <RadioButton
                     android:id="@+id/rbState1"
@@ -294,7 +303,8 @@
                 android:layout_marginLeft="24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textRating"
                 app:layout_constraintStart_toEndOf="@+id/textRating"
-                app:layout_constraintTop_toTopOf="@+id/textRating" />
+                app:layout_constraintTop_toTopOf="@+id/textRating"
+                android:contentDescription="@string/desc_rating_bar"/>
 
             <TextView
                 android:id="@+id/textMemo"
@@ -333,6 +343,7 @@
                     android:id="@+id/txtRecordMemo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/desc_memo_input"
                     android:layout_weight="1"
                     android:textStyle="normal"
                     android:gravity="top"

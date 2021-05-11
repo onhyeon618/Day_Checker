@@ -70,7 +70,7 @@
     <string name="db_export_agree">내용을 확인하였으며, 백업을 위한 정보 수집에 동의합니다.</string>
     <string name="db_export_email">사용자 확인용 이메일</string>
     <string name="db_export_pwd">복원 시 사용할 비밀번호</string>
-    <string name="db_export_pwd_hint">8~15자 이내로 입력하세요</string>
+    <string name="db_export_pwd_hint">비밀번호는 8~15자 이내로 입력하세요</string>
     <string name="db_export_btn">데이터 백업하기</string>
     
     <string name="db_import_main">데이터를 복원하시겠습니까?</string>
@@ -79,7 +79,7 @@
     </string>
     <string name="db_import_email">복원 등록 이메일</string>
     <string name="db_import_pwd">비밀번호</string>
-    <string name="db_import_pwd_hint">8~15자 이내</string>
+    <string name="db_import_pwd_hint">8~15자 이내의 비밀번호</string>
     <string name="db_import_btn">데이터 복원하기</string>
 
     <string name="db_reset_main">기기에 저장된 모든 기록을 삭제하시겠습니까? 백업하지 않은 기록은 모두 지워지며, 다시 복구할 수 없습니다.</string>
@@ -112,4 +112,24 @@
 
     <string name="sample_admob_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="sample_unit_id">ca-app-pub-3940256099942544/2247696110</string>
+
+    <string name="desc_app_logo">홈 버튼</string>
+    <string name="desc_next_month">다음 달 버튼</string>
+    <string name="desc_prev_month">이전 달 버튼</string>
+    <string name="desc_item_options">기록 아이템 옵션</string>
+    <string name="desc_rating_bar">평점 선택 바</string>
+    <string name="desc_back_button">뒤로가기</string>
+    <string name="desc_memo_input">한 줄 메모 입력칸</string>
+    <string name="desc_email_input">이메일 입력칸</string>
+    <string name="desc_pwd_input">비밀번호 입력칸. 8에서 15글자 이내로 입력.</string>
+    <string name="desc_inquiry_input">문의 내용 입력칸</string>
+
+    <string name="desc_color_white">하얀색</string>
+    <string name="desc_color_black">검은색</string>
+    <string name="desc_color_red">빨간색</string>
+    <string name="desc_color_pink">분홍색</string>
+    <string name="desc_color_yellow">노란색</string>
+    <string name="desc_color_green">초록색</string>
+    <string name="desc_color_sky">하늘색</string>
+    <string name="desc_color_blue">파란색</string>
 </resources>

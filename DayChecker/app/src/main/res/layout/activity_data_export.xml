@@ -19,7 +19,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            app:navigationContentDescription="@string/desc_back_button" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -127,6 +128,7 @@
                     android:id="@+id/txtExportEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_email_input"
                     android:inputType="textEmailAddress"
                     android:nextFocusForward="@id/inputLayoutInquiryContext"
                     android:textColor="@color/black"

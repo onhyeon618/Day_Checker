@@ -68,15 +68,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:textStyle="normal"
         android:text="작성한 한 줄 메모 내용"
         android:textColor="@color/black"
         android:textSize="14dp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -93,7 +91,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/ratingBarRecord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ratingBarRecord"
-        app:srcCompat="@drawable/three_dots" />
+        app:srcCompat="@drawable/three_dots"
+        android:contentDescription="@string/desc_item_options" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

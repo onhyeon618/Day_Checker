@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/app_title" />
+                app:srcCompat="@drawable/app_title"
+                android:contentDescription="@string/desc_app_logo" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -53,7 +53,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back_button" />
+            app:srcCompat="@drawable/back_button"
+            android:contentDescription="@string/desc_prev_month" />
 
         <TextView
             android:id="@+id/currentMonthText"
@@ -76,7 +77,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/forward_button" />
+            app:srcCompat="@drawable/forward_button"
+            android:contentDescription="@string/desc_next_month" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -157,6 +159,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
                             android:textStyle="normal"
                             android:gravity="center"
                             android:text="@string/no_record1"
