@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textSize="16dp"
                 app:textColor="@color/black"
-                app:fontFamily="@font/medium"
+                android:textStyle="normal"
                 app:vdtImage="@drawable/date_icon"
                 app:vdtText="2021-04-27" />
 
@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textSize="16dp"
                 app:textColor="@color/black"
-                app:fontFamily="@font/medium"
+                android:textStyle="normal"
                 app:vdtImage="@drawable/time_icon"
                 app:vdtText="10:30" />
 
@@ -82,7 +82,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/bold"
+                android:textStyle="bold"
                 android:text="@string/record_condition"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -201,7 +201,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/bold"
+                android:textStyle="bold"
                 android:text="@string/record_state"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -236,7 +236,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_first"
                     android:gravity="center"
-                    android:fontFamily="@font/medium"
+                    android:textStyle="normal"
                     android:textSize="14dp" />
 
                 <RadioButton
@@ -251,7 +251,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_second"
                     android:gravity="center"
-                    android:fontFamily="@font/medium"
+                    android:textStyle="normal"
                     android:textSize="14dp" />
 
                 <RadioButton
@@ -266,7 +266,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_third"
                     android:gravity="center"
-                    android:fontFamily="@font/medium"
+                    android:textStyle="normal"
                     android:textSize="14dp" />
             </RadioGroup>
 
@@ -277,7 +277,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/bold"
+                android:textStyle="bold"
                 android:text="@string/record_score"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -303,7 +303,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="36dp"
-                android:fontFamily="@font/bold"
+                android:textStyle="bold"
                 android:text="@string/record_memo"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -334,7 +334,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/medium"
+                    android:textStyle="normal"
                     android:gravity="top"
                     android:maxLength="200"
                     android:inputType="textMultiLine"

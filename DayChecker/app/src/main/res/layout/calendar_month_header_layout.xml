@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="SUN"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="MON"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="TUE"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="WED"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="THU"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="FRI"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="SAT"
-            android:fontFamily="@font/light"
+            android:textStyle="normal"
             android:textColor="@color/black"
             android:textSize="12dp" />
 

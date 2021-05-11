@@ -26,7 +26,7 @@
         android:text="12 : 34"
         android:textColor="@color/black"
         android:textSize="16dp"
-        android:fontFamily="@font/bold"
+        android:textStyle="bold"
 
         app:layout_constraintStart_toEndOf="@+id/recordColor"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,20 +37,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:checkable="false"
         android:clickable="false"
-        android:fontFamily="@font/medium"
         android:paddingHorizontal="10dp"
         android:paddingVertical="3dp"
         android:text="적당한 거"
         android:textColor="@color/white"
         android:textSize="12dp"
+        android:textStyle="normal"
         app:chipBackgroundColor="@color/statusBar"
         app:layout_constraintBottom_toBottomOf="@+id/textRecordTime"
         app:layout_constraintStart_toEndOf="@+id/textRecordTime"
-        app:layout_constraintTop_toTopOf="@+id/textRecordTime"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintTop_toTopOf="@+id/textRecordTime" />
 
     <RatingBar
         android:id="@+id/ratingBarRecord"
@@ -75,7 +73,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/medium"
+        android:textStyle="normal"
         android:text="작성한 한 줄 메모 내용"
         android:textColor="@color/black"
         android:textSize="14dp"

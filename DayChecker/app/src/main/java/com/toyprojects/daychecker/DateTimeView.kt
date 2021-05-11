@@ -27,7 +27,6 @@ class DateTimeView @JvmOverloads constructor(
 
                 vdtTextView.text = getString(R.styleable.DateTimeView_vdtText)
                 vdtTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getDimension(R.styleable.DateTimeView_textSize, 16F))
-                vdtTextView.typeface = ResourcesCompat.getFont(context, getResourceId(R.styleable.DateTimeView_fontFamily, R.font.medium))
                 vdtTextView.setTextColor(getColor(R.styleable.DateTimeView_textColor, 0))
 
                 val vdtImageParams = vdtImage.layoutParams as LayoutParams

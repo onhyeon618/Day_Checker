@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
-            android:fontFamily="@font/medium"
             android:textColor="@color/black"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/nextMonthImage"
             app:layout_constraintStart_toEndOf="@id/previousMonthImage"
@@ -141,7 +141,7 @@
                             app:cornerRadius="0dp"
                             app:backgroundTint="#3C3C3C"
                             android:text="@string/add_record"
-                            android:fontFamily="@font/medium"
+                            android:textStyle="bold"
                             android:textColor="#FFFFFF"
                             android:textSize="16dp"/>
 
@@ -157,7 +157,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:textStyle="normal"
                             android:gravity="center"
                             android:text="@string/no_record1"
                             android:textColor="@color/black"
@@ -167,7 +167,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:fontFamily="@font/light"
+                            android:textStyle="normal"
                             android:gravity="center"
                             android:text="@string/no_record2"
                             android:textColor="@color/black"
@@ -181,7 +181,7 @@
                             app:cornerRadius="0dp"
                             app:backgroundTint="#3C3C3C"
                             android:text="@string/first_record"
-                            android:fontFamily="@font/medium"
+                            android:textStyle="bold"
                             android:textColor="#FFFFFF"
                             android:textSize="16dp"/>
                     </LinearLayout>

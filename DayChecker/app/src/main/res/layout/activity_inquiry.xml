@@ -47,9 +47,9 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/medium"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -72,10 +72,10 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/bold"
                 android:text="@string/inquiry_email"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,9 +99,9 @@
                     android:id="@+id/txtInquiryEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/medium"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:textStyle="normal"
                     android:inputType="textEmailAddress"
                     android:nextFocusForward="@id/inputLayoutInquiryContext"/>
 
@@ -116,10 +116,10 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/bold"
                 android:text="@string/inquiry_context"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,11 +145,11 @@
                     android:id="@+id/txtInquiryContext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/medium"
                     android:gravity="top"
                     android:inputType="textMultiLine"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,8 +178,8 @@
                 app:backgroundTint="@color/mainTheme"
                 android:text="@string/inquiry_send"
                 android:textSize="18dp"
-                android:fontFamily="@font/bold"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

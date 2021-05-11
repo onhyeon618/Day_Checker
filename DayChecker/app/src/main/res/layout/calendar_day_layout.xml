@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_margin="4dp"
         android:gravity="center"
-        android:fontFamily="@font/light"
+        android:textStyle="normal"
         android:textColor="@color/black"
         android:textSize="16dp"
         tools:text="22" />
