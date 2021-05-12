@@ -245,7 +245,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_first"
                     android:gravity="center"
-                    android:textStyle="normal"
+                    android:textStyle="bold"
                     android:textSize="14dp" />
 
                 <RadioButton
@@ -260,7 +260,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_second"
                     android:gravity="center"
-                    android:textStyle="normal"
+                    android:textStyle="bold"
                     android:textSize="14dp" />
 
                 <RadioButton
@@ -275,7 +275,7 @@
                     android:textColor="@drawable/rb_state_text"
                     android:text="@string/record_state_third"
                     android:gravity="center"
-                    android:textStyle="normal"
+                    android:textStyle="bold"
                     android:textSize="14dp" />
             </RadioGroup>
 

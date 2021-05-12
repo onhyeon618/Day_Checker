@@ -67,7 +67,7 @@ class Holder(val binding: RecyclerDayRecordBinding): RecyclerView.ViewHolder(bin
             4 -> {
                 binding.recordColor.setBackgroundResource(R.color.Rpink)
                 binding.chipRecordState.setChipBackgroundColorResource(R.color.Rpink)
-                binding.chipRecordState.setTextColor(getColorStateList(binding.root.context, R.color.white))
+                binding.chipRecordState.setTextColor(getColorStateList(binding.root.context, R.color.black))
             }
             5 -> {
                 binding.recordColor.setBackgroundResource(R.color.Ryellow)

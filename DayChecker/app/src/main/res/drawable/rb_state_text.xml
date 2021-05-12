@@ -5,6 +5,6 @@
         android:color="@color/colorPrimary" />
         
     <item android:state_checked="false"
-        android:color="@color/colorPrimaryDark" />
+        android:color="@color/colorPrimary" />
 
 </selector>
