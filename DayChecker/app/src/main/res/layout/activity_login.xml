@@ -128,12 +128,13 @@
         android:id="@+id/btnNumpad0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
         android:background="@android:color/transparent"
         android:contentDescription="숫자패드0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
         app:srcCompat="@drawable/numpad_0" />
 
     <ImageButton

@@ -85,15 +85,15 @@ class MainActivity : AppCompatActivity() {
     })
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this) {}
+
         // Return to main theme from splash screen
         setTheme(R.style.ThNoActionBar)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Initialize the Mobile Ads SDK.
-        MobileAds.initialize(this) {}
 
         // Toolbar
         val topAppBar = binding.toolbar
