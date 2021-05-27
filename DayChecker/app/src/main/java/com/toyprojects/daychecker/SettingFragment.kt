@@ -121,10 +121,10 @@ class SettingFragment: PreferenceFragmentCompat() {
 
         // "어플리케이션 버전"
         appVersionPreference?.summary = "v$currentVersion"
-        // appVersionPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
-        //     checkForUpdate()
-        //     true
-        // }
+        appVersionPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
+            checkForUpdate()
+            true
+        }
 
         // "문의 보내기"
         sendInquiryPreference?.onPreferenceClickListener= Preference.OnPreferenceClickListener {
