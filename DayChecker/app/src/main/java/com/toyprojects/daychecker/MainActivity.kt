@@ -38,7 +38,6 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var roomdb: RecordDB
@@ -270,8 +269,13 @@ class MainActivity : AppCompatActivity() {
 
         // Go back to today's date when logo clicked
         binding.logo.setOnClickListener {
-            getToday = true
-            binding.calendarView.smoothScrollToMonth(currentMonth)
+            if (selectedDate?.year == today.year && selectedDate?.monthValue == today.monthValue) {
+                selectDate(today)
+            }
+            else {
+                getToday = true
+                binding.calendarView.smoothScrollToMonth(currentMonth)
+            }
         }
 
         // prev/next month buttons
